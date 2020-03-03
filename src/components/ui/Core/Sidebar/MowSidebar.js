@@ -9,12 +9,9 @@ import {User} from "../../../utils/User/User";
 import {setLogin} from "../../../../pages/Router";
 import MowStatusBar from "../StatusBar/MowStatusBar";
 import {fontFamily} from "../../../../values/Styles/MowStyles";
+import {connect} from 'react-redux';
 
-export default class MowSidebar extends React.Component {
-
-    constructor(props) {
-        super(props);
-    }
+class MowSidebar extends React.Component {
 
     _handleLogout() {
         // to update user login situation
@@ -24,9 +21,11 @@ export default class MowSidebar extends React.Component {
     }
 
     render() {
+        console.log('SIDE BAR PROPS =>', this.props.profile);
 
         let nav = this.props.navigation;
-
+        const {profile = {}} = this.props;
+        const profileImg = profile.image || require('../../../../assets/image/guest.png');
         return (
 
             <View
@@ -55,7 +54,7 @@ export default class MowSidebar extends React.Component {
 
                         <Image
                             resizeMode={'contain'}
-                            source={require('../../../../assets/image/guest.png')}
+                            source={profileImg}
                             style={{
                                 width: hp("8%"),
                                 height: hp("8%"),
@@ -74,7 +73,7 @@ export default class MowSidebar extends React.Component {
                                 fontFamily: fontFamily.medium
                             }}>
 
-                            Bianca Watkins
+                            {profile.name}
 
                         </Text>
 
@@ -86,7 +85,7 @@ export default class MowSidebar extends React.Component {
                                 fontFamily: fontFamily.medium
                             }}>
 
-                            biancawatkins@gmail.com
+                            {profile.email}
 
                         </Text>
 
@@ -357,6 +356,12 @@ export default class MowSidebar extends React.Component {
         );
     }
 }
+
+const mapStateToProps = state => ({
+    profile: state.auth.profile
+})
+
+export default connect(mapStateToProps)(MowSidebar);
 
 const styles = StyleSheet.create({
     drawerIcon:{

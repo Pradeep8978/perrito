@@ -11,22 +11,22 @@ import NormalRegister from "./../containers/register.container";
 import Verification from "./NotLogin/Register/Verification";
 
 
-import HomeScreen from "./Login/HomeScreen";
+import HomeScreen from "./../containers/home.container";
 import MowSidebar from "../components/ui/Core/Sidebar/MowSidebar";
 import {deviceWidth} from "../values/Constants/MowConstants";
 import Settings from "./Login/Settings/Settings";
 import Categories from "./Login/Categories/Categories";
 import CategoryDetail from "./Login/Categories/CategoryDetail";
-import ProductList from "./Login/Product/ProductList";
-import ProductDetail from "./Login/Product/ProductDetail";
-import Cart from "./Login/CartOperations/Cart";
+import ProductList from "./../containers/productList.container";
+import ProductDetail from "./../containers/productDetails.container";
+import Cart from "./../containers/cart.container";
 import AddressList from "./Login/Address/AddressList";
 import NewAddress from "./Login/Address/NewAddress";
 import PaymentInformation from "./Login/CartOperations/PaymentInformation";
 import CompleteOrder from "./Login/CartOperations/CompleteOrder";
 
 import OrderList from "./Login/Orders/OrderList";
-import Profile from "./Login/User/Profile";
+import Profile from "./../containers/profile.container";
 import Password from "./Login/User/Password";
 import Favorites from "./Login/Favorites/Favorites";
 import OrderDetail from "./Login/Orders/OrderDetail";
@@ -76,20 +76,12 @@ const StackOptions = {
 
 };
 
-// drawer navigation
-// const DrawerNavigation = createDrawerNavigator(
-//     {
-//         HomeScreen: { screen: AppContainer }
-//     },
-//     {
-//         contentComponent: props => <MowSidebar {...props} />,
-//         drawerWidth: deviceWidth,
-//     }
-// );
-
 const drawerOptions =  {
-            contentComponent: props => <MowSidebar {...props} />,
+            drawerContent: props => <MowSidebar {...props} />,
             drawerWidth: deviceWidth,
+            drawerStyle: {
+                width: deviceWidth,
+              }
         }
 
 let user = new User();

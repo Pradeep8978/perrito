@@ -11,8 +11,10 @@ import {MowInput} from "../../../components/ui/Common/Input/MowInput";
 import {mowStrings} from "../../../values/Strings/MowStrings";
 import PopularSearch from "../../../sampleData/PopularSearch";
 import SyncStorage from "sync-storage";
+import {connect} from 'react-redux';
+import {fetchProducts} from '../../../actions/products.actions';
 
-export default class HomeFilter extends React.Component {
+class HomeFilter extends React.Component {
 
     state = {
         searchText: "",
@@ -45,13 +47,15 @@ export default class HomeFilter extends React.Component {
     _handleSearch(value) {
         if (value) {
             // handle searched word here
-
+            this.props.fetchProducts(value);
+            this.props.navigation.navigate("ProductList")
             // to save searched word
             this._saveSearch(value);
         }
     }
 
     _goToCategoryList(searchData) {
+        this.props.fetchProducts(searchData.id);
         this.props.navigation.navigate("ProductList")
     }
 
@@ -296,3 +300,11 @@ const titleStyle = ({
         color: mowColors.titleTextColor
     }
 });
+
+
+const mapDispatchToProps = {
+    fetchProducts
+}
+
+
+export default connect(null, mapDispatchToProps)(HomeFilter);

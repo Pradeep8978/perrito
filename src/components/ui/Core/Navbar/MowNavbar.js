@@ -8,9 +8,8 @@ import {mowColors} from "../../../../values/Colors/MowColors";
 import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import {fontFamily} from "../../../../values/Styles/MowStyles";
 
-class MowNavbar extends React.Component {
+const MowNavbar = props => {
 
-    render() {
         const navigation = useNavigation();
 
         return (
@@ -54,13 +53,13 @@ class MowNavbar extends React.Component {
                         fontFamily: fontFamily.bold
                     }}>
 
-                    {this.props.title}
+                    {props.title}
 
                 </Text>
 
                 {/* user button */}
                 <TouchableOpacity
-                    onPress={() => {this.props.navigation.openDrawer()}}
+                    onPress={() => {navigation.openDrawer()}}
                     style={{flex: 1.5, alignItems: "center"}}>
 
                     <FAIcon
@@ -75,5 +74,4 @@ class MowNavbar extends React.Component {
         );
     }
 
-}
 export default (MowNavbar);

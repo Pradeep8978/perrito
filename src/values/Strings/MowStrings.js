@@ -61,12 +61,18 @@ export const mowStrings = new LocalizedString({
             bestDiscounts: "Today's Best Discounts",
             bestSeller: "Best Seller",
             outOfStock: "Out of Stock",
-            advantages: "Advantages of Mowega",
+            advantages: "Advantages of Perrito",
             smartPhones: "Smart Phones",
             carAccessories: "Car Accessories",
             new: "New",
             trendBrands: "Trend Brands",
-            browseAmazingProduct: "Browse Stylish and Amazing Products"
+            browseAmazingProduct: "Browse Stylish and Amazing Products",
+            food: "Food",
+            toys: "Toys",
+            accessories: "Accessories",
+            bath: "Bath",
+            grooming: "Grooming",
+            health: "Health"
         },
         drawerMenu: {
             faq: "FAQ.",
@@ -106,6 +112,7 @@ export const mowStrings = new LocalizedString({
             sendAgain: "Send Again",
             shoppingNow: "Shopping Now",
             addToCart: "ADD TO CART",
+            addedToCart: "ADDED TO CART",
             completeShopping: "COMPLETE SHOPPING",
             completePayment: "COMPLETE PAYMENT",
             goToPayment: "GO TO PAYMENT",
@@ -176,6 +183,7 @@ export const mowStrings = new LocalizedString({
             share: "Share",
             customerComments: "Customer Comments",
             productFeature: "Product Feature",
+            description: "Description",
             showMore: "Show More"
         },
         addressList: {
@@ -218,7 +226,7 @@ export const mowStrings = new LocalizedString({
             password: "Password",
             name: "Name and Surname",
             almostDone: "Almost Done",
-            securityCodeMessage: "To use the Mowega-Shop-App,\nwe've sent a verification code to\nbiancawatkins@gmail.com",
+            securityCodeMessage: "To use the Perrito-Shop-App,\nwe've sent a verification code to\nbiancawatkins@gmail.com",
             verificationCodeMessage: "Enter the 5-digit security code, then approve.",
             codeError: "No verification code?",
             congratsMessage: "Congratulations,\nyour registration was completed successfully.\nNow you can start using the app."
@@ -370,7 +378,7 @@ export const mowStrings = new LocalizedString({
             bestDiscounts: "Die besten Rabatte von heute",
             bestSeller: "Bestseller",
             outOfStock: "Nicht vorrättig",
-            advantages: "Vorteile von Mowega",
+            advantages: "Vorteile von Perrito",
             smartPhones: "Smartphones",
             carAccessories: "Auto Zubehör",
             new: "Neu",
@@ -415,6 +423,7 @@ export const mowStrings = new LocalizedString({
             sendAgain: "Send Again",
             shoppingNow: "Shopping Now",
             addToCart: "ADD TO CART",
+            addedToCart: "ADDED TO CART",
             completeShopping: "COMPLETE SHOPPING",
             completePayment: "COMPLETE PAYMENT",
             goToPayment: "GO TO PAYMENT",
@@ -484,7 +493,8 @@ export const mowStrings = new LocalizedString({
             report: "Report",
             share: "Share",
             customerComments: "Customer Comments",
-            productFeature: "Product Feature",
+            productFeature: "Product Features",
+            description: "Description",
             showMore: "Show More"
         },
         addressList: {
@@ -527,7 +537,7 @@ export const mowStrings = new LocalizedString({
             password: "Password",
             name: "Name and Surname",
             almostDone: "Almost Done",
-            securityCodeMessage: "To use the Mowega-Shop-App,\nwe've sent a verification code to\nbiancawatkins@gmail.com",
+            securityCodeMessage: "To use the Perrito-Shop-App,\nwe've sent a verification code to\nbiancawatkins@gmail.com",
             verificationCodeMessage: "Enter the 5-digit security code, then approve.",
             codeError: "No verification code?",
             congratsMessage: "Congratulations,\nyour registration was completed successfully.\nNow you can start using the app."

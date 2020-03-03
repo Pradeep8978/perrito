@@ -33,12 +33,7 @@ const TrendCategories = [
     {
         title: "Cosmetic",
         image: require("../assets/icon/ic_cosmetic.png")
-    },
-    {
-        title: "Car Accessory",
-        image: require("../assets/icon/ic_wheel.png")
-    },
-
+    }
 ];
 
 export default TrendCategories;

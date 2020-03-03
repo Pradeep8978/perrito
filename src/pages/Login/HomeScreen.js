@@ -1,6 +1,7 @@
 import React from "react";
 import {Text, View, Image, FlatList, TouchableOpacity, ScrollView} from "react-native";
-import Swiper from 'react-native-swiper'
+import Swiper from 'react-native-swiper';
+import Axios from 'axios';
 import {mowColors} from "../../values/Colors/MowColors";
 import {heightPercentageToDP as hp, widthPercentageToDP as wp} from "react-native-responsive-screen";
 import MowContainer from "../../components/ui/Core/Container/MowContainer";
@@ -12,18 +13,66 @@ import TrendCampaign from "../../sampleData/Campaign/TrendCampaign";
 import {MowButtonBasic} from "../../components/ui/Common/Button/MowButton";
 import FAIcon from "react-native-vector-icons/FontAwesome";
 import TodaysBestDiscounts from "../../sampleData/TodaysBestDiscounts";
-import BestSeller from "../../sampleData/BestSeller";
+// import BestSeller from "../../sampleData/BestSeller";
 import {MowStarView} from "../../components/ui/Common/StarView/MowStarView";
 import Advantages from "../../sampleData/Advantages";
-import SmartPhones from "../../sampleData/SmartPhones";
+// import SmartPhones from "../../sampleData/SmartPhones";
 import CarAccessories from "../../sampleData/CarAccessories";
 import {MowCountDown} from "../../components/ui/Common/CountDown/MowCountDown";
 import TrendBrands from "../../sampleData/TrendBrands";
+import { API_BASE_URL } from "../../constants/config";
+import CategoryTile from "./CategoryTile";
+import ProductTile from "./ProductTile";
 
 export default class HomeScreen extends React.Component {
 
-    render() {
+    state = {
+        BestSeller: []
+    }
 
+    componentDidMount(){
+        this.props.fetchUserProfile();
+        this.fetchBestSellers();
+        this.fetchProductsByCategory('food', 'Food');
+        this.fetchProductsByCategory('toys', 'Toys');
+        this.fetchProductsByCategory('health', 'Health');
+        this.fetchProductsByCategory('accessories', 'Accessories');
+        this.fetchProductsByCategory('grooming', 'Grooming');
+        this.fetchProductsByCategory('bath', 'Bath');
+    }
+
+    fetchBestSellers = () => {
+        const url = `${API_BASE_URL}/products/list`;
+        Axios.get(url)
+        .then(res => {
+            this.setState({
+                BestSeller: res.data
+            })
+        })
+    }
+
+    fetchProductsByCategory = (searchStr, category) => {
+        const url = `${API_BASE_URL}/products/list?search=${searchStr}`;
+        Axios.get(url)
+        .then(res => {
+            this.setState({
+                [category]: res.data.filter((o,i)=>i<4)
+            })
+        })
+    }
+    
+    onSelectProduct = (product) => {
+        this.props.preserveProductDetails(product);
+        this.props.navigation.navigate("ProductDetail");
+    }
+
+    onClickProductCategory = (type) => {
+        this.props.fetchProducts(type);
+        this.props.navigation.navigate("ProductList")
+    }
+
+    render() {
+        const {BestSeller, Food} = this.state;
         return (
 
             <MowContainer
@@ -103,7 +152,7 @@ export default class HomeScreen extends React.Component {
 
                                 // category item touchable
                                 <TouchableOpacity
-                                    onPress={() => {this.props.navigation.navigate("Categories")}}
+                                    onPress={() => this.onClickProductCategory(item.title)}
                                     style={{backgroundColor: mowColors.mainColor, borderRadius: 10, width: hp("12%"), height: hp("12%"), marginRight: 10, justifyContent: "center", alignItems: "center"}}
                                     key={index}>
 
@@ -133,204 +182,11 @@ export default class HomeScreen extends React.Component {
 
                             )}
                         />
-
                     </View>
 
                     {/* trend campaign view */}
 
-                    {/* today's best discounts view */}
-                    <View
-                        style={[categoryStyle, {marginTop: 15, backgroundColor: mowColors.categoryBGColor}]}>
-
-                        {/* trend campaign title view */}
-                        <MowTitleView
-                            showButton={false}
-                            title={mowStrings.homeScreen.bestDiscounts}/>
-
-                        {/* today's best discount list */}
-                        <FlatList
-                            horizontal={true}
-                            showsHorizontalScrollIndicator={false}
-                            keyExtractor={(item, index) => index.toString()}
-                            data={TodaysBestDiscounts}
-                            renderItem={({ item, index }) => (
-
-                                //discount list item
-                                <View
-                                    style={{
-                                        width: wp("35%"),
-                                        height: hp("33%"),
-                                        marginHorizontal: 10,
-                                    }}
-                                    key={index}>
-
-                                    {/* image view */}
-                                    <View
-                                        style={{
-                                            height: "60%",
-                                            width: "100%",
-                                            borderRadius: 10,
-                                            borderStyle: "solid",
-                                            borderWidth: 1,
-                                            borderColor: "rgba(112, 112, 112, 0.16)"
-                                        }}>
-
-                                        {/* hearth icon touchable */}
-                                        <TouchableOpacity
-                                            style={{position: "absolute", top: 5, right: 5, zIndex: 99}}>
-
-                                            <FAIcon
-                                                style={{
-                                                    color: mowColors.titleTextColor,
-                                                    fontSize: hp("2%")
-                                                }}
-                                                name={"heart"}/>
-
-                                        </TouchableOpacity>
-
-                                        <Image
-                                            style={{
-                                                height: "100%",
-                                                width: "100%",
-                                            }}
-                                            resizeMode={"contain"}
-                                            source={item["image"]}/>
-
-                                    </View>
-
-                                    {/* title text */}
-                                    <Text
-                                        numberOfLines={1}
-                                        style={{
-                                            marginTop: 5,
-                                            fontSize: hp("1.8%"),
-                                            fontWeight: "normal",
-                                            fontStyle: "normal",
-                                            letterSpacing: 0,
-                                            textAlign: "left",
-                                            color: mowColors.titleTextColor,
-                                        }}>
-
-                                        {item["title"]}
-
-                                    </Text>
-
-                                    {/* star view */}
-                                    <View
-                                        style={{flexDirection: "row", alignItems: "center", marginTop: 5}}>
-
-                                        {/* stars*/}
-                                        <MowStarView
-                                            score={item["star"]}/>
-
-                                        {/* vote count text */}
-                                        <Text
-                                            style={{
-                                                fontSize: hp("1.4%"),
-                                                fontWeight: "normal",
-                                                fontStyle: "normal",
-                                                letterSpacing: 0,
-                                                textAlign: "left",
-                                                color: "#848484",
-                                            }}>
-
-                                            {"("}{item["voteCount"]}{")"}
-
-                                        </Text>
-
-                                    </View>
-
-                                    {/* price & discount view */}
-                                    <View
-                                        style={{flexDirection: "row", marginTop: 5, alignItems: "center"}}>
-
-                                        {/* discount rate view */}
-                                        <View
-                                            style={{
-                                                backgroundColor: mowColors.mainColor,
-                                                borderRadius: 5,
-                                                justifyContent: "center",
-                                                alignItems: "center",
-                                                width: hp("5%"),
-                                                height: hp("5%")
-                                            }}>
-
-                                            <Text
-                                                style={{
-                                                    fontSize: hp("2%"),
-                                                    fontWeight: "bold",
-                                                    fontStyle: "normal",
-                                                    letterSpacing: 0,
-                                                    textAlign: "left",
-                                                    color: "#ffffff"
-                                                }}>
-
-                                                {item["discountRate"]}
-
-                                            </Text>
-
-                                        </View>
-
-                                        {/* price view */}
-                                        <View
-                                            style={{marginLeft: 10}}>
-
-                                            {/* first price text view  */}
-                                            <View
-                                                style={{alignItems: "center", justifyContent: "center"}}>
-
-                                                {/* first price text */}
-                                                <Text
-                                                    style={{
-                                                        fontSize: hp("1.8%"),
-                                                        fontWeight: "300",
-                                                        fontStyle: "normal",
-                                                        letterSpacing: 0,
-                                                        textAlign: "center",
-                                                        color: "#c2c2c2"
-                                                    }}>
-
-                                                    {item["firstPrice"]}
-
-                                                </Text>
-
-                                                <View
-                                                    style={{
-                                                        backgroundColor: mowColors.mainColor,
-                                                        width: "100%",
-                                                        height: hp("0.1%"),
-                                                        position: "absolute",
-                                                    }}/>
-
-                                            </View>
-
-                                            {/* last price text */}
-                                            <Text
-                                                style={{
-                                                    marginTop: 1,
-                                                    fontSize: hp("2%"),
-                                                    fontWeight: "bold",
-                                                    fontStyle: "normal",
-                                                    letterSpacing: 0,
-                                                    textAlign: "center",
-                                                    color: mowColors.mainColor
-                                                }}>
-
-                                                {item["lastPrice"]}
-
-                                            </Text>
-
-                                        </View>
-
-                                    </View>
-
-                                </View>
-
-                            )}
-                        />
-
-                    </View>
-
+    
                     {/* trend brands view */}
                     <View
                         style={[categoryStyle, {marginTop: 15, backgroundColor: mowColors.categoryBGColor}]}>
@@ -394,170 +250,8 @@ export default class HomeScreen extends React.Component {
                             keyExtractor={(item, index) => index.toString()}
                             data={BestSeller}
                             renderItem={({ item, index }) => (
-
                                 //best seller list item
-                                <View
-                                    style={{
-                                        width: wp("35%"),
-                                        height: hp("25%"),
-                                        marginHorizontal: 10,
-                                    }}
-                                    key={index}>
-
-                                    {/* image view */}
-                                    <View
-                                        style={{
-                                            height: "60%",
-                                            width: "100%",
-                                            borderRadius: 10,
-                                            borderStyle: "solid",
-                                            borderWidth: 1,
-                                            borderColor: "rgba(112, 112, 112, 0.16)",
-                                            justifyContent: "center"
-                                        }}>
-
-                                        {/* hearth icon touchable */}
-                                        <TouchableOpacity
-                                            style={{position: "absolute", top: 5, right: 5, zIndex: 99}}>
-
-                                            <FAIcon
-                                                style={{
-                                                    color: mowColors.titleTextColor,
-                                                    fontSize: hp("2%")
-                                                }}
-                                                name={"heart"}/>
-
-                                        </TouchableOpacity>
-
-                                        <Image
-                                            style={{
-                                                height: "100%",
-                                                width: "100%",
-                                            }}
-                                            resizeMode={"contain"}
-                                            source={item["image"]}/>
-
-                                        {
-                                            !item["stock"] &&
-
-                                            // out of stock view
-                                            <View
-                                                style={{
-                                                    position: "absolute",
-                                                    opacity: 0.8,
-                                                    backgroundColor: "#848484",
-                                                    width: "100%"
-                                                }}>
-
-                                                <Text
-                                                    style={{
-                                                        fontSize: hp("1.8%"),
-                                                        fontWeight: "normal",
-                                                        fontStyle: "normal",
-                                                        letterSpacing: 0,
-                                                        textAlign: "center",
-                                                        color: "#ffffff"
-                                                    }}>
-
-                                                    {mowStrings.homeScreen.outOfStock}
-
-                                                </Text>
-
-                                            </View>
-
-                                        }
-
-                                        {
-                                            item["new"] &&
-
-                                                <View
-                                                    style={{
-                                                        position: "absolute",
-                                                        backgroundColor: mowColors.mainColor,
-                                                        top: 5,
-                                                        left: 5,
-                                                        borderRadius: 200,
-                                                        width: hp("5%"),
-                                                        height: hp("5%"),
-                                                        justifyContent: "center"
-                                                    }}>
-
-                                                    <Text
-                                                        style={{
-                                                            fontWeight: "bold",
-                                                            textAlign: "center",
-                                                            color: "#ffffff"
-                                                        }}>
-
-                                                        {mowStrings.homeScreen.new}
-
-                                                    </Text>
-
-                                                </View>
-                                        }
-
-                                    </View>
-
-                                    <Text
-                                        numberOfLines={1}
-                                        style={{
-                                            marginTop: 5,
-                                            fontSize: hp("1.8%"),
-                                            fontWeight: "normal",
-                                            fontStyle: "normal",
-                                            letterSpacing: 0,
-                                            textAlign: "left",
-                                            color: mowColors.titleTextColor,
-                                        }}>
-
-                                        {item["title"]}
-
-                                    </Text>
-
-                                    {/* star view */}
-                                    <View
-                                        style={{flexDirection: "row", alignItems: "center", marginTop: 5,}}>
-
-                                        {/* stars*/}
-                                        <MowStarView
-                                            score={item["star"]}/>
-
-                                        {/* vote count text */}
-                                        <Text
-                                            style={{
-                                                marginLeft: 2,
-                                                fontSize: hp("1.4%"),
-                                                fontWeight: "normal",
-                                                fontStyle: "normal",
-                                                letterSpacing: 0,
-                                                textAlign: "left",
-                                                color: mowColors.textColor,
-                                            }}>
-
-                                            {"("}{item["voteCount"]}{")"}
-
-                                        </Text>
-
-                                    </View>
-
-                                    {/* price text */}
-                                    <Text
-                                        style={{
-                                            fontSize: hp("2%"),
-                                            fontWeight: "bold",
-                                            fontStyle: "normal",
-                                            letterSpacing: 0,
-                                            textAlign: "left",
-                                            color: mowColors.titleTextColor,
-                                            marginTop: 5,
-                                        }}>
-
-                                        {item["price"]}
-
-                                    </Text>
-
-                                </View>
-
+                                <ProductTile item={item} index={index} onSelectProduct={this.onSelectProduct}/>
                             )}
                         />
 
@@ -632,388 +326,13 @@ export default class HomeScreen extends React.Component {
                         />
 
                     </View>
-
                     {/* smart phones view */}
-                    <View
-                        style={[categoryStyle, {marginTop: 15, paddingRight: gPadding, backgroundColor: mowColors.categoryBGColor}]}>
-
-                        {/* smart phones title view */}
-                        <MowTitleView
-                            showButton={false}
-                            title={mowStrings.homeScreen.smartPhones}/>
-
-                        {/* smart phones list */}
-                        <FlatList
-                            showsHorizontalScrollIndicator={false}
-                            keyExtractor={(item, index) => index.toString()}
-                            numColumns={2}
-                            data={SmartPhones}
-                            renderItem={({ item, index }) => (
-
-                                //smart phone list item
-                                <View
-                                    style={{
-                                        height: hp("33%"),
-                                        margin: 10,
-                                        marginTop: 0,
-                                        flex: 1,
-                                    }}
-                                    key={index}>
-
-                                    {/* image view */}
-                                    <View
-                                        style={{
-                                            height: "60%",
-                                            width: "100%",
-                                            borderRadius: 10,
-                                            borderStyle: "solid",
-                                            borderWidth: 1,
-                                            borderColor: "rgba(112, 112, 112, 0.16)",
-                                            justifyContent: "center"
-                                        }}>
-
-                                        {/* hearth icon touchable */}
-                                        <TouchableOpacity
-                                            style={{position: "absolute", top: 5, right: 5, zIndex: 99}}>
-
-                                            <FAIcon
-                                                style={{
-                                                    color: mowColors.titleTextColor,
-                                                    fontSize: hp("2%")
-                                                }}
-                                                name={"heart"}/>
-
-                                        </TouchableOpacity>
-
-                                        <Image
-                                            style={{
-                                                height: "100%",
-                                                width: "100%",
-                                            }}
-                                            resizeMode={"contain"}
-                                            source={item["image"]}/>
-
-                                        {
-                                            item["new"] &&
-
-                                            <View
-                                                style={{
-                                                    position: "absolute",
-                                                    backgroundColor: mowColors.mainColor,
-                                                    top: 5,
-                                                    left: 5,
-                                                    borderRadius: 200,
-                                                    width: hp("5%"),
-                                                    height: hp("5%"),
-                                                    justifyContent: "center"
-                                                }}>
-
-                                                <Text
-                                                    style={{
-                                                        fontWeight: "bold",
-                                                        textAlign: "center",
-                                                        color: "#ffffff"
-                                                    }}>
-
-                                                    {mowStrings.homeScreen.new}
-
-                                                </Text>
-
-                                            </View>
-                                        }
-
-                                    </View>
-
-                                    {/* title text */}
-                                    <Text
-                                        numberOfLines={1}
-                                        style={{
-                                            marginTop: 5,
-                                            fontSize: hp("1.8%"),
-                                            fontWeight: "normal",
-                                            fontStyle: "normal",
-                                            letterSpacing: 0,
-                                            textAlign: "left",
-                                            color: mowColors.titleTextColor,
-                                        }}>
-
-                                        {item["title"]}
-
-                                    </Text>
-
-                                    {/* star view */}
-                                    <View
-                                        style={{flexDirection: "row", alignItems: "center", marginTop: 5}}>
-
-                                        {/* stars*/}
-                                        <MowStarView
-                                            score={item["star"]}/>
-
-                                        {/* vote count text */}
-                                        <Text
-                                            style={{
-                                                marginLeft: 3,
-                                                fontSize: hp("1.4%"),
-                                                fontWeight: "normal",
-                                                fontStyle: "normal",
-                                                letterSpacing: 0,
-                                                textAlign: "left",
-                                                color: mowColors.textColor
-                                            }}>
-
-                                            {"("}{item["voteCount"]}{")"}
-
-                                        </Text>
-
-                                    </View>
-
-                                    {/* price & discount view */}
-                                    <View
-                                        style={{flexDirection: "row", marginTop: 5, alignItems: "center"}}>
-
-                                        {/* discount rate view */}
-                                        <View
-                                            style={{
-                                                backgroundColor: mowColors.mainColor,
-                                                borderRadius: 5,
-                                                justifyContent: "center",
-                                                alignItems: "center",
-                                                width: hp("5%"),
-                                                height: hp("5%")
-                                            }}>
-
-                                            <Text
-                                                style={{
-                                                    fontSize: hp("2%"),
-                                                    fontWeight: "bold",
-                                                    fontStyle: "normal",
-                                                    letterSpacing: 0,
-                                                    textAlign: "left",
-                                                    color: "#ffffff"
-                                                }}>
-
-                                                {item["discountRate"]}
-
-                                            </Text>
-
-                                        </View>
-
-                                        {/* price view */}
-                                        <View
-                                            style={{marginLeft: 10}}>
-
-                                            {/* first price text view  */}
-                                            <View
-                                                style={{alignItems: "center", justifyContent: "center"}}>
-
-                                                {/* first price text */}
-                                                <Text
-                                                    style={{
-                                                        fontSize: hp("1.8%"),
-                                                        fontWeight: "300",
-                                                        fontStyle: "normal",
-                                                        letterSpacing: 0,
-                                                        textAlign: "center",
-                                                        color: mowColors.textColor
-                                                    }}>
-
-                                                    {item["firstPrice"]}
-
-                                                </Text>
-
-                                                <View
-                                                    style={{
-                                                        backgroundColor: mowColors.mainColor,
-                                                        width: "100%",
-                                                        height: hp("0.1%"),
-                                                        position: "absolute",
-                                                    }}/>
-
-                                            </View>
-
-                                            {/* last price text */}
-                                            <Text
-                                                style={{
-                                                    marginTop: 1,
-                                                    fontSize: hp("2%"),
-                                                    fontWeight: "bold",
-                                                    fontStyle: "normal",
-                                                    letterSpacing: 0,
-                                                    textAlign: "center",
-                                                    color: mowColors.mainColor
-                                                }}>
-
-                                                {item["lastPrice"]}
-
-                                            </Text>
-
-                                        </View>
-
-                                    </View>
-
-                                </View>
-
-                            )}
-                        />
-
-                    </View>
-
-                    {/* car accessories view */}
-                    <View
-                        style={[categoryStyle, {marginTop: 15, paddingRight: gPadding, backgroundColor: mowColors.categoryBGColor}]}>
-
-                        {/* smart phones title view */}
-                        <MowTitleView
-                            showButton={false}
-                            title={mowStrings.homeScreen.carAccessories}/>
-
-                        {/* car accessories list */}
-                        <FlatList
-                            showsHorizontalScrollIndicator={false}
-                            keyExtractor={(item, index) => index.toString()}
-                            numColumns={2}
-                            data={CarAccessories}
-                            renderItem={({ item, index }) => (
-
-                                //car accessories list item
-                                <View
-                                    style={{
-                                        height: hp("33%"),
-                                        margin: 10,
-                                        marginTop: 0,
-                                        flex: 1,
-                                    }}
-                                    key={index}>
-
-                                    {/* image view */}
-                                    <View
-                                        style={{
-                                            height: "70%",
-                                            width: "100%",
-                                            borderRadius: 10,
-                                            borderStyle: "solid",
-                                            borderWidth: 1,
-                                            borderColor: "rgba(112, 112, 112, 0.16)",
-                                            justifyContent: "center"
-                                        }}>
-
-                                        {/* hearth icon touchable */}
-                                        <TouchableOpacity
-                                            style={{position: "absolute", top: 5, right: 5, zIndex: 99}}>
-
-                                            <FAIcon
-                                                style={{
-                                                    color: mowColors.titleTextColor,
-                                                    fontSize: hp("2%")
-                                                }}
-                                                name={"heart"}/>
-
-                                        </TouchableOpacity>
-
-                                        <Image
-                                            style={{
-                                                height: "100%",
-                                                width: "100%",
-                                            }}
-                                            resizeMode={"contain"}
-                                            source={item["image"]}/>
-
-                                        {
-                                            item["new"] &&
-
-                                            <View
-                                                style={{
-                                                    position: "absolute",
-                                                    backgroundColor: mowColors.mainColor,
-                                                    top: 5,
-                                                    left: 5,
-                                                    borderRadius: 200,
-                                                    width: hp("5%"),
-                                                    height: hp("5%"),
-                                                    justifyContent: "center"
-                                                }}>
-
-                                                <Text
-                                                    style={{
-                                                        fontWeight: "bold",
-                                                        textAlign: "center",
-                                                        color: "#ffffff"
-                                                    }}>
-
-                                                    {mowStrings.homeScreen.new}
-
-                                                </Text>
-
-                                            </View>
-                                        }
-
-                                    </View>
-
-                                    {/* title text */}
-                                    <Text
-                                        numberOfLines={1}
-                                        style={{
-                                            marginTop: 5,
-                                            fontSize: hp("1.8%"),
-                                            fontWeight: "normal",
-                                            fontStyle: "normal",
-                                            letterSpacing: 0,
-                                            textAlign: "left",
-                                            color: mowColors.titleTextColor
-                                        }}>
-
-                                        {item["title"]}
-
-                                    </Text>
-
-                                    {/* star view */}
-                                    <View
-                                        style={{flexDirection: "row", alignItems: "center", marginTop: 5}}>
-
-                                        {/* stars*/}
-                                        <MowStarView
-                                            score={item["star"]}/>
-
-                                        {/* vote count text */}
-                                        <Text
-                                            style={{
-                                                marginLeft: 2,
-                                                fontSize: hp("1.4%"),
-                                                fontWeight: "normal",
-                                                fontStyle: "normal",
-                                                letterSpacing: 0,
-                                                textAlign: "left",
-                                                color: mowColors.textColor
-                                            }}>
-
-                                            {"("}{item["voteCount"]}{")"}
-
-                                        </Text>
-
-                                    </View>
-
-                                    {/* price text */}
-                                    <Text
-                                        style={{
-                                            marginTop: 5,
-                                            fontSize: hp("2%"),
-                                            fontWeight: "bold",
-                                            fontStyle: "normal",
-                                            letterSpacing: 0,
-                                            textAlign: "left",
-                                            color: mowColors.titleTextColor
-                                        }}>
-
-                                        {item["price"]}
-
-                                    </Text>
-
-                                </View>
-
-                            )}
-                        />
-
-                    </View>
+                    <CategoryTile title={mowStrings.homeScreen.food} data={Food} onSelectProduct={this.onSelectProduct}/>
+                    <CategoryTile title={mowStrings.homeScreen.toys} data={Food} onSelectProduct={this.onSelectProduct}/>
+                    <CategoryTile title={mowStrings.homeScreen.accessories} data={Food} onSelectProduct={this.onSelectProduct}/>
+                    <CategoryTile title={mowStrings.homeScreen.grooming} data={Food} onSelectProduct={this.onSelectProduct}/>
+                    <CategoryTile title={mowStrings.homeScreen.health} data={Food} onSelectProduct={this.onSelectProduct}/>
+                    <CategoryTile title={mowStrings.homeScreen.bath} data={Food} onSelectProduct={this.onSelectProduct}/>
 
                 </ScrollView>
 

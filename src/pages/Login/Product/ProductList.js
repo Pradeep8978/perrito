@@ -35,7 +35,7 @@ export default class ProductList extends React.Component {
         this.state = {
             pickerVisible: false,
             pickerSelectedId: null,
-            productList: WomanClothing,
+            productList: [],
             productListKey: 0,
             boxView: true,
             activeIndex: 0,
@@ -45,6 +45,7 @@ export default class ProductList extends React.Component {
         self = this;
     }
 
+
     componentDidMount() {
         // to set all active index as 0
         let arr = [];
@@ -53,6 +54,14 @@ export default class ProductList extends React.Component {
             arr[i] = 0;
         }
         this.setState({activeSlide: arr});
+    }
+
+    static getDerivedStateFromProps(props, state){
+        if(props.productList.length && !state.productList.length){
+            return{
+                productList: props.productList
+            }
+        }
     }
 
     // to handle (sort) picker selection
@@ -145,7 +154,8 @@ export default class ProductList extends React.Component {
     }
 
     _addToCart(product) {
-        _showToast.success(mowStrings.productAdded)
+        _showToast.success(mowStrings.productAdded);
+        this.props.addProductToCart(product);
     }
 
     // image pagination style
@@ -171,8 +181,21 @@ export default class ProductList extends React.Component {
         });
     }
 
-    render() {
+    onClickProduct = (product) => {
+       this.props.preserveProductDetails(product);
+       this.props.navigate.navigation('ProductDetail');
+    }
 
+    isExistCart = (item) => {
+        const {cartItems} = this.props;
+        console.log('CART ITEMS =>', cartItems)
+        console.log('OUR ITEM =>', item)
+        const isExist = cartItems.find(o => o._id === item._id);
+        return isExist;
+    }
+
+    render() {
+        console.log('PROODUCTS LIST ===============>', this.props.productList);
         return(
 
             <MowContainer
@@ -313,7 +336,7 @@ export default class ProductList extends React.Component {
                                     <View
                                         key={index}
                                         style={{margin: 5, flex: 1}}>
-
+                                        <TouchableOpacity onPress={this.onClickProduct}>
                                         {/* image view */}
                                         <View
                                             style={{
@@ -381,7 +404,7 @@ export default class ProductList extends React.Component {
                                             }
 
                                             {
-                                                !item["stock"] &&
+                                                !item["count"] &&
 
                                                 // out of stock view
                                                 <View
@@ -429,7 +452,7 @@ export default class ProductList extends React.Component {
                                                     fontFamily: fontFamily.regular
                                                 }}>
 
-                                                {item["title"]}
+                                                {item["name"]}
 
                                             </Text>
 
@@ -439,10 +462,10 @@ export default class ProductList extends React.Component {
 
                                                 {/* stars*/}
                                                 <MowStarView
-                                                    score={item["star"]}/>
+                                                    score={item["star"] || 5}/>
 
                                                 {/* vote count text */}
-                                                <Text
+                                                {/* <Text
                                                     style={{
                                                         marginLeft: 3,
                                                         fontSize: hp("1.5%"),
@@ -454,7 +477,7 @@ export default class ProductList extends React.Component {
 
                                                     {"("}{item["voteCount"]}{")"}
 
-                                                </Text>
+                                                </Text> */}
 
                                             </View>
 
@@ -514,7 +537,7 @@ export default class ProductList extends React.Component {
                                                                         fontFamily: fontFamily.light
                                                                     }}>
 
-                                                                    {item["currency"]}{item["firstPrice"]}
+                                                                    {'₹ '}{item["price"]}
 
                                                                 </Text>
 
@@ -562,23 +585,24 @@ export default class ProductList extends React.Component {
                                                             fontFamily: fontFamily.bold
                                                         }}>
 
-                                                        {item["currency"]}{item["lastPrice"]}
+                                                        {'₹ '}{item["price"]}
 
                                                     </Text>
                                             }
 
                                         </View>
-
+                                        </TouchableOpacity>
                                         {/* add to cart button */}
                                         <MowButtonBasic
+                                            disabled={this.isExistCart(item)}
                                             onPress={() => {this._addToCart(item)}}
-                                            containerStyle={{marginBottom: 0, marginTop: 10, borderColor: mowColors.textColor}}
-                                            textStyle={{color: mowColors.textColor}}
+                                            containerStyle={{marginBottom: 0, marginTop: 10, borderColor: this.isExistCart(item) ? mowColors.textColor :  mowColors.mainColor}}
+                                            textStyle={{color: this.isExistCart(item) ? mowColors.textColor :  mowColors.mainColor}}
                                             type={"success"}
                                             size={"small"}
                                             filled={false}>
 
-                                            {mowStrings.button.addToCart}
+                                            {mowStrings.button[this.isExistCart(item) ? 'addedToCart' : 'addToCart']}
 
                                         </MowButtonBasic>
 

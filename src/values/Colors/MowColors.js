@@ -46,7 +46,7 @@ export let mowColors = {
     
     progressColor: '#2866BF',
     
-    successColor: "#ff8600",
+    successColor: "#28d43c",
     
     warningColor: '#f29c00',
     
