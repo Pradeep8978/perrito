@@ -8,14 +8,14 @@ import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scroll-view";
 import {heightPercentageToDP as hp} from "react-native-responsive-screen";
 import {MowInput} from "../../../components/ui/Common/Input/MowInput";
 import {MowButtonBasic} from "../../../components/ui/Common/Button/MowButton";
+import Axios from "axios";
+import {_showToast} from "../../../components/ui/Common/Toast/MowToast";
 
 export default class Feedback extends React.Component {
 
     state = {
-        fullName: "Bianca Watkins",
-        email: "biancawatkins@gmail.com",
-        title: "About product types",
-        message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+        title: "",
+        message: ""
     };
 
     // to store entered regular from user
@@ -24,6 +24,18 @@ export default class Feedback extends React.Component {
             [key]: value,
         })
     };
+
+    handleSubmit = () => {
+        const {title, message} = this.state;
+        const bodyObj = {title, message};
+        Axios.post('/feedback', bodyObj)
+        .then(res=> {
+        _showToast.success('Thank you for your feedback..');
+        })
+        .catch(err => {
+        _showToast.error('We are sorry! Unable to sumbit feedback...');
+        })
+    }
 
     render() {
 
@@ -39,50 +51,6 @@ export default class Feedback extends React.Component {
                     <KeyboardAwareScrollView
                         showsVerticalScrollIndicator={false}
                         style={{marginTop: hp("2%")}}>
-
-                        <View
-                            style={inputStyle.container}>
-
-                            {/* fullName title regular */}
-                            <Text
-                                style={[inputStyle.titleText, {color: mowColors.titleTextColor}]}>
-
-                                {mowStrings.placeholder.fullName}
-
-                            </Text>
-
-                            {/* fullName input */}
-                            <MowInput
-                                leftIcon={"user"}
-                                type={"text"}
-                                containerStyle={{width: "100%", backgroundColor: mowColors.viewBGColor}}
-                                textInputStyle={{color: mowColors.textColor}}
-                                value={this.state.fullName}
-                                onChangeText={value => this.onChangeText('fullName', value)}/>
-
-                        </View>
-
-                        <View
-                            style={inputStyle.container}>
-
-                            {/* email title regular */}
-                            <Text
-                                style={[inputStyle.titleText, {color: mowColors.titleTextColor}]}>
-
-                                {mowStrings.placeholder.email}
-
-                            </Text>
-
-                            {/* email input */}
-                            <MowInput
-                                leftIcon={"mail"}
-                                type={"text"}
-                                containerStyle={{width: "100%", backgroundColor: mowColors.viewBGColor}}
-                                textInputStyle={{color: mowColors.textColor}}
-                                value={this.state.email}
-                                onChangeText={value => this.onChangeText('email', value)}/>
-
-                        </View>
 
                         <View
                             style={inputStyle.container}>
@@ -144,8 +112,8 @@ export default class Feedback extends React.Component {
                     </KeyboardAwareScrollView>
 
                     <MowButtonBasic
+                        onPress={this.handleSubmit}
                         type={"success"}>
-
                         {mowStrings.button.send}
 
                     </MowButtonBasic>

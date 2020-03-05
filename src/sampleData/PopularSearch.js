@@ -1,31 +1,29 @@
 
 const PopularSearch = [
-
     {
-        id: 1,
-        title: "Clothes"
+        id: "food",
+        title: "Food"
     },
     {
-        id: 2,
-        title: "Sunglasses"
+        id: "accessories",
+        title: "Accessories"
     },
     {
-        id: 3,
-        title: "Laptop"
+        id: "toys",
+        title: "Toys"
     },
     {
-        id: 4,
-        title: "Lamp"
+        id: "health",
+        title: "Health"
     },
     {
-        id: 5,
-        title: "Keyboard"
+        id: "grooming",
+        title: "Grooming"
     },
     {
-        id: 6,
-        title: "Car Accessories"
+        id: "bath",
+        title: "Bath"
     }
-
 ];
 
 export default PopularSearch;

@@ -37,7 +37,7 @@ export default class ProductDetail extends React.Component {
     };
 
     state = {
-        product: this.props.navigation.getParam("product"),
+        // product: this.props.navigation.getParam("product"),
         colorArr: [],
         colorListKey: 0,
         sizeArr: [],
@@ -177,21 +177,16 @@ export default class ProductDetail extends React.Component {
     }
 
     render() {
-
-        const product = this.state.product;
-
+        // const product = this.state.product;
+        const product = this.props.selectedProduct
         return(
-
             <MowContainer
                 style={{backgroundColor: mowColors.pageBGDarkColor}}
                 title={mowStrings.productDetail.title}>
-
                 <ScrollView>
-
                     {/* product info view */}
                     <View
                         style={[categoryStyleWithoutShadow, {backgroundColor: mowColors.categoryBGColor}]}>
-
                         {/* product name text */}
                         <Text
                             style={{
@@ -203,13 +198,9 @@ export default class ProductDetail extends React.Component {
                                 fontStyle: "normal",
                                 letterSpacing: 0,
                                 color: mowColors.titleTextColor
-
                             }}>
-
-                            {product["title"]}
-
+                            {product["name"]}
                         </Text>
-
                         {/* shipping info text */}
                         <Text
                             style={{
@@ -270,131 +261,7 @@ export default class ProductDetail extends React.Component {
 
                     {/* content view */}
                     <View>
-
-                        {/* body size view */}
-                        <View
-                            style={[categoryStyleWithoutShadow, {marginTop: 15, backgroundColor: mowColors.categoryBGColor}]}>
-
-                            {/* body size text */}
-                            <Text
-                                style={{
-                                    marginBottom: 10,
-                                    fontSize: hp("1.8%"),
-                                    fontWeight: "600",
-                                    fontStyle: "normal",
-                                    letterSpacing: 0,
-                                    textAlign: "left",
-                                    color: mowColors.titleTextColor
-                                }}>
-
-                                {mowStrings.productDetail.bodySize}
-
-                            </Text>
-
-                            {/* body size list view */}
-                            <FlatList
-                                key={this.state.sizeListKey}
-                                horizontal={true}
-                                showsHorizontalScrollIndicator={false}
-                                keyExtractor={(item, index) => index.toString()}
-                                data={BodySize}
-                                renderItem={({ item, index }) => (
-
-                                    <TouchableOpacity
-                                        onPress={() => {this._handleSizeSelection(index)}}
-                                        style={{
-                                            width: hp("4%"),
-                                            height: hp("4%"),
-                                            borderRadius: 3,
-                                            marginLeft: index != 0 ? 10 : 0,
-                                            justifyContent: "center",
-                                            alignItems: "center",
-                                            backgroundColor: this.state.sizeArr[index] ? mowColors.mainColor : "#ffffff",
-                                            ...borderStyle,
-                                            marginRight: 1
-                                        }}
-                                        key={index}>
-
-                                        <Text
-                                            style={{
-                                                color: this.state.sizeArr[index] ? "white" : mowColors.mainColor,
-                                                fontSize: hp("1.5%"),
-                                                fontWeight: "600",
-                                                fontStyle: "normal",
-                                                letterSpacing: 0,
-                                                textAlign: "center",
-                                            }}>
-
-                                            {item["size"]}
-
-                                        </Text>
-
-                                    </TouchableOpacity>
-
-                                )}
-                            />
-
-                        </View>
-
-                        {/* color view */}
-                        <View
-                            style={[categoryStyleWithoutShadow, {marginTop: 15, backgroundColor: mowColors.categoryBGColor}]}>
-
-                            {/* color text */}
-                            <Text
-                                style={{
-                                    marginBottom: 10,
-                                    fontSize: hp("1.8%"),
-                                    fontWeight: "600",
-                                    fontStyle: "normal",
-                                    letterSpacing: 0,
-                                    textAlign: "left",
-                                    color: mowColors.titleTextColor
-                                }}>
-
-                                {mowStrings.productDetail.color}
-
-                            </Text>
-
-                            {/* color list */}
-                            <FlatList
-                                key={this.state.colorListKey}
-                                horizontal={true}
-                                showsHorizontalScrollIndicator={false}
-                                keyExtractor={(item, index) => index.toString()}
-                                data={Colors}
-                                renderItem={({ item, index }) => (
-
-                                    <TouchableOpacity
-                                        onPress={() => {this._handleColorSelection(index)}}
-                                        style={{
-                                            width: hp("4%"),
-                                            height: hp("4%"),
-                                            borderRadius: 3,
-                                            backgroundColor: item["color"],
-                                            marginLeft: index != 0 ? 10 : 0,
-                                            justifyContent: "center",
-                                            alignItems: "center",
-                                            marginRight: 1
-                                        }}
-                                        key={index}>
-
-                                        {
-                                            this.state.colorArr[index] &&
-
-                                            <FAIcon
-                                                style={{color: "white", fontSize: hp("2.5%")}}
-                                                name={"check"}/>
-                                        }
-
-                                    </TouchableOpacity>
-
-                                )}
-                            />
-
-                        </View>
-
-                        {/* discount rate & price & add to cart button */}
+         {/* discount rate & price & add to cart button */}
                         <View
                             style={[categoryStyleWithoutShadow, {flexDirection: "row", alignItems: "center", marginTop: 15, backgroundColor: mowColors.categoryBGColor}]}>
 
@@ -501,7 +368,7 @@ export default class ProductDetail extends React.Component {
                                             color: "#575757"
                                         }}>
 
-                                        {product["currency"]}{product["lastPrice"]}
+                                        {'₹ '+product["price"]}
 
                                     </Text>
                             }
@@ -543,25 +410,28 @@ export default class ProductDetail extends React.Component {
                                     color: mowColors.titleTextColor
                                 }}>
 
-                                {mowStrings.productDetail.productFeature}
+                                {mowStrings.productDetail.description}
 
                             </Text>
 
                             {/* product feature text */}
-                            <Text
-                                style={{
-                                    marginTop: 2,
-                                    fontSize: hp("1.6%"),
-                                    fontWeight: "300",
-                                    fontStyle: "normal",
-                                    letterSpacing: 0,
-                                    textAlign: "left",
-                                    color: mowColors.textColor
-                                }}>
+                            {
+                                product.description.map(val=>(
+                                    <Text
+                                    style={{
+                                        marginTop: 2,
+                                        fontSize: hp("1.6%"),
+                                        fontWeight: "300",
+                                        fontStyle: "normal",
+                                        letterSpacing: 0,
+                                        textAlign: "left",
+                                        color: mowColors.textColor
+                                    }}>
+                                    {val}
+                                </Text>
+                                ))
+                            }
 
-                                {product["productFeature"]}
-
-                            </Text>
 
                         </View>
 

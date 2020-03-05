@@ -24,14 +24,11 @@ class MowOrderViewItem extends React.Component {
     };
 
     render() {
-
         const value = this.props.product;
-
-        const navigation = useNavigation();
         return(
 
             <TouchableOpacity
-                onPress={() => {navigation.navigate("OrderDetail", {product: value})}}
+                onPress={() => {useNavigation().navigate("OrderDetail", {product: value})}}
                 style={{
                     marginHorizontal: wp("5%"),
                     marginVertical: hp("1%"),

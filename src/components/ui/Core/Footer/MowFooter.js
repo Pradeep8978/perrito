@@ -9,15 +9,14 @@ import {mowColors} from "../../../../values/Colors/MowColors";
 import PropTypes from 'prop-types';
 import { useNavigation } from '@react-navigation/native';
 
-class MowFooter extends React.Component {
+const MowFooter = props => {
 
     // footer props
-    static propTypes = {
-        activeIndex: PropTypes.number
-    };
+    // static propTypes = {
+    //     activeIndex: PropTypes.number
+    // };
 
-    render() {
-        // const navigation = useNavigation();
+        const navigation = useNavigation();
 
         return (
 
@@ -49,10 +48,10 @@ class MowFooter extends React.Component {
 
                     <FatherIcon
                         name={"home"}
-                        style={[styles.buttonIcon, {color: this.props.activeIndex === 1 ? mowColors.mainColor : "#a1a1a1"}]}/>
+                        style={[styles.buttonIcon, {color: props.activeIndex === 1 ? mowColors.mainColor : "#a1a1a1"}]}/>
 
                     <Text
-                        style={[styles.buttonText, {color: this.props.activeIndex === 1 ? mowColors.mainColor : "#a1a1a1"}]}>
+                        style={[styles.buttonText, {color: props.activeIndex === 1 ? mowColors.mainColor : "#a1a1a1"}]}>
 
                         {mowStrings.explore}
 
@@ -62,15 +61,15 @@ class MowFooter extends React.Component {
 
                 {/* categories button*/}
                 <TouchableOpacity
-                    onPress={() => {useNavigation().navigate("Categories")}}
+                    onPress={() => {navigation.navigate("Categories")}}
                     style={styles.buttonView}>
 
                     <FatherIcon
                         name={"grid"}
-                        style={[styles.buttonIcon, {color: this.props.activeIndex === 2 ? mowColors.mainColor : "#a1a1a1"}]}/>
+                        style={[styles.buttonIcon, {color: props.activeIndex === 2 ? mowColors.mainColor : "#a1a1a1"}]}/>
 
                     <Text
-                        style={[styles.buttonText, {color: this.props.activeIndex === 2 ? mowColors.mainColor : "#a1a1a1"}]}>
+                        style={[styles.buttonText, {color: props.activeIndex === 2 ? mowColors.mainColor : "#a1a1a1"}]}>
 
                         {mowStrings._categories}
 
@@ -80,15 +79,15 @@ class MowFooter extends React.Component {
 
                 {/* cart button*/}
                 <TouchableOpacity
-                    onPress={() => {useNavigation().navigate("Cart")}}
+                    onPress={() => {navigation.navigate("Cart")}}
                     style={styles.buttonView}>
 
                     <FatherIcon
                         name={"shopping-bag"}
-                        style={[styles.buttonIcon, {color: this.props.activeIndex === 3 ? mowColors.mainColor : "#a1a1a1"}]}/>
+                        style={[styles.buttonIcon, {color: props.activeIndex === 3 ? mowColors.mainColor : "#a1a1a1"}]}/>
 
                     <Text
-                        style={[styles.buttonText, {color: this.props.activeIndex === 3 ? mowColors.mainColor : "#a1a1a1"}]}>
+                        style={[styles.buttonText, {color: props.activeIndex === 3 ? mowColors.mainColor : "#a1a1a1"}]}>
 
                         {mowStrings.cart}
 
@@ -98,15 +97,15 @@ class MowFooter extends React.Component {
 
                 {/* orders button*/}
                 <TouchableOpacity
-                    onPress={() => {useNavigation().navigate("OrderList")}}
+                    onPress={() => {navigation.navigate("OrderList")}}
                     style={styles.buttonView}>
 
                     <FatherIcon
                         name={"box"}
-                        style={[styles.buttonIcon, {color: this.props.activeIndex === 4 ? mowColors.mainColor : "#a1a1a1"}]}/>
+                        style={[styles.buttonIcon, {color: props.activeIndex === 4 ? mowColors.mainColor : "#a1a1a1"}]}/>
 
                     <Text
-                        style={[styles.buttonText, {color: this.props.activeIndex === 4 ? mowColors.mainColor : "#a1a1a1"}]}>
+                        style={[styles.buttonText, {color: props.activeIndex === 4 ? mowColors.mainColor : "#a1a1a1"}]}>
 
                         {mowStrings.orders}
 
@@ -119,7 +118,6 @@ class MowFooter extends React.Component {
         );
     }
 
-}
 export default (MowFooter);
 
 const styles = StyleSheet.create({

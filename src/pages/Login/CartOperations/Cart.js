@@ -53,35 +53,35 @@ export default class Cart extends React.Component {
 
     _calculateTotalPrice(flag, index) {
 
-        let count = this.state.cartData[index]["count"];
+        let cartCount = this.state.cartData[index]["cartCount"];
 
         // +1 product
         if (flag)
         {
-            count++;
+            cartCount++;
 
-            this._updateProductCount(count, index);
+            this._updateProductcartCount(cartCount, index);
         }
         // -1 product
         else {
-            if (count !== 1) {
-                count --;
+            if (cartCount !== 1) {
+                cartCount --;
 
-                this._updateProductCount(count, index);
+                this._updateProductcartCount(cartCount, index);
             }
         }
     }
 
-    // to update product count according to the user value
-    _updateProductCount(value, index) {
+    // to update product cartCount according to the user value
+    _updateProductcartCount(value, index) {
 
         // the value that entered by user
         value = Number(value);
 
         let newArray = [...this.state.cartData];
 
-        // to update product count according to the value
-        newArray[index]["count"] = value;
+        // to update product cartCount according to the value
+        newArray[index]["cartCount"] = value;
 
         // to update new array with new product cost
         newArray = this._updateProductCost(index, newArray, value);
@@ -100,20 +100,20 @@ export default class Cart extends React.Component {
     }
 
     // to update product total cost
-    _updateProductCost(index, productArr, count) {
+    _updateProductCost(index, productArr, cartCount) {
 
         // to get product product price
         let price = productArr[index]["price"];
 
         // to calculate new product total price and update
-        productArr[index]["totalPrice"] = (price * count);
+        productArr[index]["totalPrice"] = (price * cartCount);
 
         // return new product array
         return productArr;
     }
 
     render() {
-
+        console.log('CART DATA ===================>', this.props.cartItems)
         return(
 
             <MowContainer
@@ -125,10 +125,10 @@ export default class Cart extends React.Component {
                     style={{marginBottom: hp("7%")}}>
 
                     <FlatList
-                        key={this.state.cartDataListKey}
+                        // key={this.state.cartDataListKey}
                         style={{marginTop: -5}}
                         keyExtractor={(item, index) => index.toString()}
-                        data={this.state.cartData}
+                        data={this.props.cartItems}
                         renderItem={({ item, index }) => (
 
                             <View
@@ -170,7 +170,7 @@ export default class Cart extends React.Component {
                                             fontFamily: fontFamily.semiBold
                                         }}>
 
-                                        {item["title"]}
+                                        {item["name"]}
 
                                     </Text>
 
@@ -192,7 +192,7 @@ export default class Cart extends React.Component {
                                                     fontFamily: fontFamily.bold
                                                 }}>
 
-                                                {item["currencyIcon"]}{item["totalPrice"]}
+                                                {'₹ '+item["price"]}
 
                                             </Text>
 
@@ -203,7 +203,8 @@ export default class Cart extends React.Component {
 
                                             {/* minus button view */}
                                             <TouchableOpacity
-                                                onPress={() => {this._calculateTotalPrice(false, index)}}
+                                                disabled={item.cartCount === 1}
+                                                onPress={() => {this.props.decrementCartItem(index)}}
                                                 style={minusPlusStyle.container}>
 
                                                 <Text
@@ -215,7 +216,7 @@ export default class Cart extends React.Component {
 
                                             </TouchableOpacity>
 
-                                            {/* product count text */}
+                                            {/* product cartCount text */}
                                             <Text
                                                 style={{
                                                     fontSize: hp("2%"),
@@ -228,13 +229,13 @@ export default class Cart extends React.Component {
                                                     fontFamily: fontFamily.semiBold
                                                 }}>
 
-                                                {item["count"]}
+                                                {item["cartCount"]}
 
                                             </Text>
 
                                             {/* plus button view*/}
                                             <TouchableOpacity
-                                                onPress={() => {this._calculateTotalPrice(true, index)}}
+                                                onPress={() => {this.props.incrementCartItem(index)}}
                                                 style={minusPlusStyle.container}>
 
                                                 <Text
@@ -249,7 +250,7 @@ export default class Cart extends React.Component {
                                         </View>
 
                                         <TouchableOpacity
-                                            onPress={() => {this._deleteItemFromCart(index)}}
+                                            onPress={() => {this.props.removeCartItem(index)}}
                                             style={{flex: 1}}>
 
                                             <FeatherIcon

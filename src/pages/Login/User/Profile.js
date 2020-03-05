@@ -82,14 +82,33 @@ export default class Profile extends React.Component {
         pickerType: 0,
         pickerVisible: false,
         gender: "Female",
-        language: "English"
+        language: "English",
+        formValues: {
+            name: '',
+            email: '',
+            phone: '',
+            gender: ''
+        }
     };
+
+    componentDidMount(){
+        const {profile} = this.props;
+        this.setState(prevState => ({
+            formValues: {
+                ...prevState.formValues,
+                ...profile
+            }
+        }))
+    }
 
     // to store entered regular from user
     onChangeText = (key, value) => {
-        this.setState({
-            [key]: value,
-        })
+        this.setState(prevState => ({
+            formValues: {
+                ...prevState.formValues,
+                [key]: value
+            }
+        }))
     };
 
     /**
@@ -102,9 +121,10 @@ export default class Profile extends React.Component {
         this.setState({pickerVisible: false});
 
         let type = this.state.pickerType;
-
+        const {formValues} = this.state;
         if (type === 1) {
-            this.setState({gender: selectedItem["title"], pickerSelectedId: selectedItem["id"]})
+            formValues.gender = selectedItem["title"];
+            this.setState({formValues, pickerSelectedId: selectedItem["id"]})
         }
         else if (type === 2){
             this.setState({language: selectedItem["title"], pickerSelectedId: selectedItem["id"]})
@@ -113,6 +133,9 @@ export default class Profile extends React.Component {
     }
 
     render() {
+        const {profile} = this.props;
+        const {formValues} = this.state;
+        const profileImg = profile.image || require('../../../assets/image/guest.png');
 
         return(
 
@@ -128,7 +151,7 @@ export default class Profile extends React.Component {
                         <Image
                             style={{width: hp("8%"), height: hp("8%"), alignSelf: "center"}}
                             resizeMode={"contain"}
-                            source={require("../../../assets/image/guest.png")}/>
+                            source={profileImg}/>
 
                         {/* name, email view */}
                         <View
@@ -145,7 +168,7 @@ export default class Profile extends React.Component {
                                     fontFamily: fontFamily.medium
                                 }}>
 
-                                Bianca Watkins
+                                {profile.name}
 
                             </Text>
 
@@ -160,7 +183,7 @@ export default class Profile extends React.Component {
                                     color: mowColors.titleTextColor
                                 }}>
 
-                                biancawatkins@gmail.com
+                                {profile.email}
 
                             </Text>
 
@@ -190,15 +213,14 @@ export default class Profile extends React.Component {
                                 type={"text"}
                                 containerStyle={this.inputStyle.inputContainer}
                                 textInputStyle={this.inputStyle.inputText}
-                                value={this.state.fullName}
-                                onChangeText={value => this.onChangeText('fullName', value)}/>
+                                value={formValues.name}
+                                onChangeText={value => this.onChangeText('name', value)}/>
 
                         </View>
-
+{/* 
                         <View
                             style={this.inputStyle.container}>
 
-                            {/* username title regular */}
                             <Text
                                 style={this.inputStyle.titleText}>
 
@@ -206,7 +228,6 @@ export default class Profile extends React.Component {
 
                             </Text>
 
-                            {/* username input */}
                             <MowInput
                                 leftIcon={"user"}
                                 type={"text"}
@@ -215,7 +236,7 @@ export default class Profile extends React.Component {
                                 value={this.state.username}
                                 onChangeText={value => this.onChangeText('username', value)}/>
 
-                        </View>
+                        </View> */}
 
                         <View
                             style={this.inputStyle.container}>
@@ -223,9 +244,7 @@ export default class Profile extends React.Component {
                             {/* email title regular */}
                             <Text
                                 style={this.inputStyle.titleText}>
-
                                 {mowStrings.placeholder.email}
-
                             </Text>
 
                             {/* email input */}
@@ -234,7 +253,7 @@ export default class Profile extends React.Component {
                                 type={"text"}
                                 containerStyle={this.inputStyle.inputContainer}
                                 textInputStyle={this.inputStyle.inputText}
-                                value={this.state.email}
+                                value={formValues.email}
                                 onChangeText={value => this.onChangeText('email', value)}/>
 
                         </View>
@@ -257,37 +276,26 @@ export default class Profile extends React.Component {
                                 leftIconStyle={this.pickerStyle.buttonIcon}
                                 textStyle={this.pickerStyle.buttonText}
                                 containerStyle={this.pickerStyle.button}>
-
-                                {this.state.gender}
-
+                                {formValues.gender}
                             </MowButtonBasic>
 
                         </View>
 
-                        <View
+                        {/* <View
                             style={this.inputStyle.container}>
-
-                            {/* language title regular */}
                             <Text
                                 style={this.inputStyle.titleText}>
-
                                 {mowStrings.placeholder.gender}
-
                             </Text>
-
-                            {/* language picker button */}
                             <MowButtonBasic
                                 onPress={() => {this.setState({pickerData: Language, pickerVisible: true, pickerType: 2})}}
                                 leftIcon={"globe"}
                                 leftIconStyle={this.pickerStyle.buttonIcon}
                                 textStyle={this.pickerStyle.buttonText}
                                 containerStyle={this.pickerStyle.button}>
-
                                 {this.state.language}
-
                             </MowButtonBasic>
-
-                        </View>
+                        </View> */}
 
                         <View
                             style={this.inputStyle.container}>
@@ -306,7 +314,7 @@ export default class Profile extends React.Component {
                                 type={"text"}
                                 containerStyle={this.inputStyle.inputContainer}
                                 textInputStyle={this.inputStyle.inputText}
-                                value={this.state.phone}
+                                value={formValues.phone}
                                 onChangeText={value => this.onChangeText('phone', value)}/>
 
                         </View>
