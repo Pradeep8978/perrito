@@ -39,8 +39,13 @@ const productsReducer = (state = INITIAL_STATE, action) => {
                 cartItems: [...state.cartItems, action.payload]
             }
         case types.INCREMENT_CART_ITEM_COUNT:
-            const newCartItems = {...state.cartItems};
-            newCartItems[action.payload].cartCount = newCartItems[action.payload].cartCount+1;
+            const newCartItems = state.cartItems.map((o, i) => {
+                if(action.payload === i){
+                    o.cartCount = o.cartCount+1
+                }
+                return o;
+            })
+            // newCartItems[action.payload].cartCount = newCartItems[action.payload].cartCount+1;
             console.log('NEW CART ITEEMS ==================>', action.payload);
             return {
                 ...state,
@@ -48,8 +53,12 @@ const productsReducer = (state = INITIAL_STATE, action) => {
             }
 
         case types.DECREMENT_CART_ITEM_COUNT:
-            const updatedCart = state.cartItems;
-            updatedCart[action.payload].cartCount--;
+            const updatedCart = state.cartItems.map((o, i) => {
+                if(action.payload === i){
+                    o.cartCount = o.cartCount+1
+                }
+                return o;
+            })
             return {
                 ...state,
                 cartItems: updatedCart

@@ -165,20 +165,27 @@ export default class ProductDetail extends React.Component {
                         textAlign: "left",
                         color: mowColors.textColor
                     }}>
-
                     {item["description"]}
-
                 </Text>
-
             </View>
-
         )
+    }
 
+    onAddToCart = (product) => {
+        this.props.addProductToCart(product);
+        this.props.navigation.navigate("Cart");
+    }
+
+    isExistCart = (item) => {
+        const {cartItems} = this.props;
+        const isExist = cartItems.find(o => o._id === item._id);
+        return isExist;
     }
 
     render() {
         // const product = this.state.product;
-        const product = this.props.selectedProduct
+        const product = this.props.selectedProduct;
+        const {ca} = this.props;
         return(
             <MowContainer
                 style={{backgroundColor: mowColors.pageBGDarkColor}}
@@ -369,7 +376,6 @@ export default class ProductDetail extends React.Component {
                                         }}>
 
                                         {'₹ '+product["price"]}
-
                                     </Text>
                             }
 
@@ -380,15 +386,18 @@ export default class ProductDetail extends React.Component {
 
                                 <MowButtonBasic
                                     containerStyle={{margin: 0, height: hp(5)}}
-                                    onPress={() => {this.props.navigation.navigate("Cart")}}
+                                    onPress={() => {this.onAddToCart(product)}}
                                     leftIconStyle={{fontSize: hp("2.5%")}}
                                     textStyle={{fontSize: hp("1.5%")}}
                                     stickyIcon={true}
                                     leftIcon={"shopping-cart"}
                                     size={"small"}
-                                    type={"success"}>
+                                    type={this.isExistCart(product) ? "info" : "success"}
+                                    disabled={this.isExistCart(product)}>
 
-                                    {mowStrings.button.addToCart}
+                                    {this.isExistCart(product) ?
+                                    mowStrings.button.addedToCart : 
+                                    mowStrings.button.addToCart}
 
                                 </MowButtonBasic>
 
