@@ -47,7 +47,6 @@ const MowNavbar = props => {
                     style={{
                         flex: 7,
                         fontSize: hp("2%"),
-                        fontWeight: 'bold',
                         color: 'white',
                         textAlign: 'center',
                         fontFamily: fontFamily.bold

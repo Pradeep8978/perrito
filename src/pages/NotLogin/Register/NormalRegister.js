@@ -88,6 +88,7 @@ export default class NormalRegister extends React.Component {
                                 fontWeight: "600",
                                 fontStyle: "normal",
                                 textAlign: "center",
+                                fontFamily: "Poppins-SemiBold",
                                 color: "#ffffff",
                                 marginBottom: hp(8)
                             }}>
@@ -101,7 +102,8 @@ export default class NormalRegister extends React.Component {
                             style={inputStyle.container}>
 
                             <Text
-                                style={inputStyle.titleText}>
+                                style={
+                                    inputStyle.titleText }>
 
                                 {mowStrings.signUpPage.name}
 
@@ -191,7 +193,8 @@ export const inputStyle = ({
         letterSpacing: 0,
         textAlign: "left",
         color: "#ffffff",
-        opacity: 0.8
+        opacity: 0.8,
+        fontFamily: "Poppins-Light",
     },
     inputContainer: {
         backgroundColor: "transparent",

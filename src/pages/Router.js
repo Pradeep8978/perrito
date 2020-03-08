@@ -167,7 +167,7 @@ class Router extends React.Component {
         Text.render = function (...args) {
             let origin = oldRender.call(this, ...args);
             return React.cloneElement(origin, {
-                style: [{fontFamily: 'Poppins'}, origin.props.style]
+                style: [{fontFamily: 'Poppins-Regular'}, origin.props.style]
             });
         };
     }

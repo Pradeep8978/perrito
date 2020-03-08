@@ -19,8 +19,9 @@ import {
 } from '../../../components/ui/Common/Dialog/MowDialogFunctions';
 import {MowInfoHeader} from '../../../components/ui/MowInfoHeader';
 import {MowCheckBox} from '../../../components/ui/Common/CheckBox/MowCheckBox';
+import {connect} from 'react-redux';
 
-export default class Settings extends React.Component {
+class Settings extends React.Component {
   state = {
     checkBoxArr: [],
     addressSelected: false,
@@ -54,11 +55,12 @@ export default class Settings extends React.Component {
     if (this.state.addressSelected) {
       this.props.navigation.navigate('PaymentInformation');
     } else {
-      _warningDialog('Mowega', mowStrings.alertDialogs.addressSelection);
+      _warningDialog('Alert', mowStrings.alertDialogs.addressSelection);
     }
   }
 
   render() {
+    const {address = []} = this.props.profile || {};
     return (
       <MowContainer
         style={{backgroundColor: mowColors.pageBGDarkColor}}
@@ -94,7 +96,7 @@ export default class Settings extends React.Component {
           key={this.state.addressListKey}
           showsVerticalScrollIndicator={false}
           keyExtractor={(item, index) => index.toString()}
-          data={Address}
+          data={address}
           style={{marginTop: 10}}
           renderItem={({item, index}) => (
             <TouchableOpacity
@@ -135,7 +137,7 @@ export default class Settings extends React.Component {
                     color: mowColors.titleTextColor,
                     width: '95%',
                   }}>
-                  {item['title']}
+                  {`Address ${(index+1)}`}
                 </Text>
 
                 {/* address view */}
@@ -152,7 +154,7 @@ export default class Settings extends React.Component {
                     color: mowColors.titleTextColor,
                     width: '90%',
                   }}>
-                  {item['fullAddress']}
+                  {item['address_line_1'] + ", " + item['address_line_2']}
                 </Text>
 
                 <View style={{flexDirection: 'row'}}>
@@ -167,7 +169,7 @@ export default class Settings extends React.Component {
                       textAlign: 'left',
                       color: mowColors.titleTextColor,
                     }}>
-                    {item['name']}
+                    {item['landmark']}
                   </Text>
 
                   {/* number text */}
@@ -182,7 +184,7 @@ export default class Settings extends React.Component {
                       color: mowColors.titleTextColor,
                       marginLeft: 20,
                     }}>
-                    {item['number']}
+                    {item['city']+ ", " + item['pincode']}
                   </Text>
                 </View>
               </View>
@@ -206,3 +208,10 @@ export default class Settings extends React.Component {
     );
   }
 }
+
+
+const mapStateToProps = state => ({
+  profile: state.auth.profile
+})
+
+export default connect(mapStateToProps, {})(Settings);
