@@ -99,7 +99,6 @@ export default class Cart extends React.Component {
   }
 
   render() {
-    console.log('CART DATA ===================>', this.props.cartItems);
     const totalPrice = this._calculateTotalPrice();
     return (
       <MowContainer
@@ -263,6 +262,32 @@ export default class Cart extends React.Component {
             </MowButtonBasic>
           </View>
         </KeyboardAwareScrollView>
+
+        <MowButtonBasic
+          onPress={() => {
+            this.props.navigation.navigate('Home');
+          }}
+          style={{marginTop: hp('5%')}}
+          btnStyle={{
+            borderRadius: 50,
+            shadowColor: '#30C1DD',
+            shadowRadius: 50,
+            shadowOpacity: 0.9,
+            elevation: 3,
+            shadowOffset: {
+              width: 10,
+              height: 10,
+            },
+          }}
+          containerStyle={{marginTop: hp('5%')}}
+          textStyle={{
+            color: mowColors.mainColor,
+            fontWeight: 'normal',
+            letterSpacing: 0,
+          }}
+          type={'default'}>
+          {mowStrings.button.continue}
+        </MowButtonBasic>
 
         <View style={{width: '90%', alignSelf: 'center', alignItems: 'center'}}>
           {/* cart total ui */}

@@ -3,7 +3,7 @@ export const validateEmail = (value) => {
     const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
     if(!value){
         error = 'Email is Required';
-    }else if(emailRegex.test(value)){
+    }else if(!emailRegex.test(value)){
         error = 'Invalid Email'
     }
     return error;

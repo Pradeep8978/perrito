@@ -1,7 +1,15 @@
 import React from 'react';
 import MyContainer from '../../components/ui/Core/Container/MowContainer';
 import {mowColors} from '../../values/Colors/MowColors';
-import {Text, View, Image, ImageBackground, StatusBar} from 'react-native';
+import {
+  Text,
+  View,
+  Image,
+  ImageBackground,
+  StatusBar,
+  Modal,
+  TouchableHighlight,
+} from 'react-native';
 import {pageContainerStyle} from '../../values/Styles/MowStyles';
 import {
   heightPercentageToDP as hp,
@@ -11,6 +19,14 @@ import {MowButtonBasic} from '../../components/ui/Common/Button/MowButton';
 import {mowStrings} from '../../values/Strings/MowStrings';
 
 export default class Home extends React.Component {
+  state = {
+    modalVisible: false,
+  };
+  toggleModal = () => {
+    const {modalVisible} = this.state;
+    console.log('modalVisible', modalVisible);
+    this.setState({modalVisible: !modalVisible});
+  };
   render() {
     return (
       <MyContainer
@@ -59,6 +75,7 @@ export default class Home extends React.Component {
                 Sign Up
               </MowButtonBasic>
               <Text
+                onPress={this.toggleModal}
                 style={{
                   marginTop: hp('1%'),
                   fontSize: hp('2s%'),
@@ -70,6 +87,23 @@ export default class Home extends React.Component {
                 }}>
                 {mowStrings.loginHome.usageTerms}
               </Text>
+              <Modal animationType = {"slide"} transparent = {false} visible={this.state.modalVisible}>
+                <View style={ModalStyles.MondalContainer}>
+                  <View  style={ModalStyles.modal}>
+                    <Text>Terms and conditions</Text>
+
+                  </View>
+                  <MowButtonBasic
+                      type="info"
+                      size={'small'}
+                      containerStyle={{width: 200, position: 'absolute', bottom: 50}}
+                      onPress={() => {
+                        this.toggleModal(!this.state.modalVisible);
+                      }}>
+                      Close
+                    </MowButtonBasic>
+                </View>
+              </Modal>
             </View>
           </View>
 
@@ -113,5 +147,24 @@ const styles = {
     width: '100%',
     height: '100%',
     flex: 1,
+  },
+};
+
+const ModalStyles = {
+  MondalContainer: {
+    alignItems: 'center',
+    width: '100%',
+    height: '100%',
+    // flex: 1,
+    // marginBottom:100
+  },
+  modal: {
+    alignItems: 'center',
+    backgroundColor: '',
+    paddingTop: 50,
+    paddingHorizontal: 20
+  },
+  text: {
+    marginTop: 10,
   },
 };
