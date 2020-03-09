@@ -37,8 +37,8 @@ import {mowStrings} from './src/values/Strings/MowStrings';
 import Router from './src/pages/Router';
 import {API_BASE_URL} from './src/constants/config';
 
-XMLHttpRequest = GLOBAL.originalXMLHttpRequest ?
-   GLOBAL.originalXMLHttpRequest : GLOBAL.XMLHttpRequest;
+// XMLHttpRequest = GLOBAL.originalXMLHttpRequest ?
+//    GLOBAL.originalXMLHttpRequest : GLOBAL.XMLHttpRequest;
 
 // import NormalLogin from './src/pages/';
 

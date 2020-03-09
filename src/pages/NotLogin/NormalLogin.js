@@ -11,6 +11,8 @@ import {mowStrings} from '../../values/Strings/MowStrings';
 import {MowInput} from '../../components/ui/Common/Input/MowInput';
 import {User} from '../../components/utils/User/User';
 import {setLogin} from '../Router';
+import {validationConfig} from './Register/validations';
+import {createNativeWrapper} from 'react-native-gesture-handler';
 
 let iconColor = 'white';
 
@@ -21,6 +23,10 @@ export default class NormalLogin extends React.Component {
     this.state = {
       email: '',
       password: '',
+      formErrors: {
+        emialError: '',
+        passwordError: '',
+      },
     };
   }
 
@@ -31,8 +37,24 @@ export default class NormalLogin extends React.Component {
     });
   };
 
-  _handleLogin() {
+  validateAllFields = () => {
     const {email, password} = this.state;
+    let formValues = {email, password};
+    const formErrors = {};
+    let isValid = true;
+    Object.keys(formValues).forEach(key => {
+      const validaionFunc = validationConfig[key];
+      const errormessage = validaionFunc ? validaionFunc(formValues[key]) : '';
+      formErrors[key] = errormessage;
+      if (errormessage) isValid = false;
+    });
+    this.setState({formErrors});
+    return isValid;
+  };
+
+  _handleLogin() {
+    const {email, password, formErrors} = this.state;
+    if (!this.validateAllFields()) return;
     const bodyParams = {
       email,
       password,
@@ -52,10 +74,20 @@ export default class NormalLogin extends React.Component {
     // to change router
     // setLogin(true);
   }
+  loginError = () => {
+    return (
+      <View>
+        <Text style={{color: 'red', textAlign: 'center'}}>
+          Invalid Username and Password
+        </Text>
+      </View>
+    );
+  };
 
   // componentDidMount
 
   render() {
+    let {formErrors} = this.state;
     return (
       <MowContainer
         footer={false}
@@ -84,6 +116,7 @@ export default class NormalLogin extends React.Component {
               }}>
               {mowStrings.login}
             </Text>
+            {this.props.error && this.loginError()}
 
             {/* username view */}
             <View style={inputStyle.container}>
@@ -98,6 +131,9 @@ export default class NormalLogin extends React.Component {
                 textInputStyle={inputStyle.inputText}
                 onChangeText={value => this.onChangeText('email', value)}
               />
+              <Text style={{color: 'red', fontSize: 12}}>
+                {formErrors && formErrors.email}
+              </Text>
             </View>
 
             {/* password view */}
@@ -115,13 +151,28 @@ export default class NormalLogin extends React.Component {
                 iconColor={iconColor}
                 rightIcon={'eye'}
               />
+              <Text style={{color: 'red', fontSize: 12}}>
+                {formErrors && formErrors.password}
+              </Text>
             </View>
 
             <MowButtonBasic
               onPress={() => {
                 this._handleLogin();
               }}
+              loading={this.props.loading}
               style={{marginTop: hp('3%')}}
+              btnStyle={{
+                borderRadius: 50,
+                shadowColor: '#30C1DD',
+                shadowRadius: 20,
+                shadowOpacity: 0.9,
+                elevation: 10,
+                shadowOffset: {
+                  width: 20,
+                  height: 20
+                }
+              }}
               containerStyle={{marginTop: hp('5%')}}
               textStyle={{
                 color: mowColors.mainColor,
@@ -148,7 +199,7 @@ export default class NormalLogin extends React.Component {
                 onPress={() => {
                   this.props.navigation.navigate('ForgotPassword');
                 }}
-                containerStyle={{borderWidth: 0}}
+                containerStyle={{borderWidth: 0, borderRadius: 50}}
                 filled={false}
                 type={'default'}>
                 {mowStrings.loginPage.forgotPassword}

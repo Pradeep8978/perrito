@@ -163,6 +163,7 @@ export class MowButtonBasic extends React.Component {
       height: hp('7%'),
       backgroundColor: mowColors.mainColor,
       borderRadius: 5,
+      ...this.props.btnStyle
     };
     if (this.props.filled) {
       this.btnStyle.backgroundColor = this._getSelectedBtnColor();
@@ -240,7 +241,13 @@ export class MowButtonBasic extends React.Component {
         </Text>
 
         {this.props.loading ? 
-        <ActivityIndicator color={"#fff"}/> :
+        <ActivityIndicator  style={[
+          this.iconStyle,
+          {
+            right: this.props.stickyIcon ? 0 : 20,
+            ...this.props.rightIconStyle,
+          },
+        ]} color={{...this.textStyle, ...this.props.textStyle}.color}/> :
         this.state.rightIcon && (
           <FeatherIcon
             style={[

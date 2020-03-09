@@ -61,6 +61,7 @@ class Settings extends React.Component {
 
   render() {
     const {address = []} = this.props.profile || {};
+    // console.log("adress", address)
     return (
       <MowContainer
         style={{backgroundColor: mowColors.pageBGDarkColor}}
