@@ -25,8 +25,10 @@ import {
   _successDialog,
   _warningDialog,
 } from '../../../components/ui/Common/Dialog/MowDialogFunctions';
+import {connect} from 'react-redux';
+import {fetchUserProfile} from './../../../actions/auth.actions';
 
-export default class NewAddress extends React.Component {
+class NewAddress extends React.Component {
   /**
    *  these style values are here because of the color change.
    *  when changed the color, styles that are outside the class, are not re-rendered!
@@ -65,13 +67,14 @@ export default class NewAddress extends React.Component {
   onSaveAddress = () => {
     const {formValues} = this.state;
     const url = `${API_BASE_URL}/customers/profile/address/new`;
-    Axios.post(url, {address: [formValues]})
+    Axios.post(url, formValues)
       .then(res => {
-        this.props.navigation.navigate('AddressList');
+        this.props.fetchUserProfile();
         _successDialog(
           'Success',
           'Address successfully added. Please select default address',
         );
+        this.props.navigation.navigate('AddressList');
       })
       .catch(err => {
         _warningDialog(
@@ -176,3 +179,10 @@ export default class NewAddress extends React.Component {
     );
   }
 }
+
+const mapDispatchToProps = {
+  fetchUserProfile
+}
+
+
+export default connect(null, mapDispatchToProps)(NewAddress);

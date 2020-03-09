@@ -2,18 +2,18 @@
 const TrendCampaign = [
 
     {
-        image: require("../../assets/image/couple_sunglasses.jpg"),
-        text: "50% off on Sunglasses",
+        image: "https://i.pinimg.com/originals/ec/74/20/ec742074eebc4c94ccea31d6b63184bb.jpg",
+        text: "50% off on Dog food",
         timeToLeft: 1000
     },
     {
-        image: require("../../assets/image/women_sport.jpg"),
-        text: "30% off on Sport Clothes",
+        image: "https://cdn3.f-cdn.com/contestentries/998042/20401808/58f23c58ea6a6_thumb900.jpg",
+        text: "Best Health products",
         timeToLeft: 2000
     },
     {
-        image: require("../../assets/image/car.jpg"),
-        text: "15% off on Car Products",
+        image: "https://themeforest.img.customer.envatousercontent.com/files/272820940/Bowie.__large_preview.jpg?auto=compress%2Cformat&q=80&fit=crop&crop=top&max-h=8000&max-w=590&s=143ab4e15fe7fbaf390c43c8e7e9a4c1",
+        text: "15% off on Pet Products",
         timeToLeft: 3000
     }
 

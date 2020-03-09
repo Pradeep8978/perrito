@@ -1,1 +1,1 @@
-export const API_BASE_URL = "https://perritoweb.herokuapp.com"
+export const API_BASE_URL = "https://perritoweb.herokuapp.com";

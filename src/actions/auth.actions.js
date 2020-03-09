@@ -95,7 +95,7 @@ export const loginUser = (bodyParams) => dispatch => {
             return res;
         })
         .catch(err => {
-            console.log('Error =>', err.toString())
+            console.log('Error =>', err)
             dispatch(loginFailure(err));
             throw err;
         })

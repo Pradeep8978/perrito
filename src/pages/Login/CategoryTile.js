@@ -111,7 +111,8 @@ const CategoryTile = props => {
                             letterSpacing: 0,
                             textAlign: "left",
                             color: mowColors.titleTextColor,
-                        }}>
+                fontFamily: 'Poppins-Light'
+            }}>
 
                         {item["name"]}
 
