@@ -6,6 +6,7 @@ import {
   FlatList,
   TouchableOpacity,
   ScrollView,
+  ActivityIndicator
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 import Axios from 'axios';
@@ -64,11 +65,19 @@ export default class HomeScreen extends React.Component {
   };
 
   fetchProductsByCategory = (searchStr, category) => {
+    this.setState({
+      [`${searchStr}Loading`]: true
+    })
     const url = `${API_BASE_URL}/products/list?categories=${searchStr}`;
     Axios.get(url).then(res => {
       this.setState({
         [category]: res.data.filter((o, i) => i < 4),
+        [`${searchStr}Loading`]: false
       });
+    }).catch(err => {
+      this.setState({
+        [`${searchStr}Loading`]: false
+      })
     });
   };
 
@@ -411,6 +420,7 @@ export default class HomeScreen extends React.Component {
           </View>
 
           {/* best seller view */}
+         
           <View
             style={[
               categoryStyle,
@@ -504,35 +514,42 @@ export default class HomeScreen extends React.Component {
             />
           </View>
           {/* smart phones view */}
+          
           <CategoryTile
             title={mowStrings.homeScreen.food}
             data={Food}
             onSelectProduct={this.onSelectProduct}
+            loading={this.state.foodLoading}
           />
           <CategoryTile
             title={mowStrings.homeScreen.toys}
             data={Food}
             onSelectProduct={this.onSelectProduct}
+            loading={this.state.toysLoading}
           />
           <CategoryTile
             title={mowStrings.homeScreen.accessories}
             data={Food}
             onSelectProduct={this.onSelectProduct}
+            loading={this.state.accessoriesLoading}
           />
           <CategoryTile
             title={mowStrings.homeScreen.grooming}
             data={Food}
             onSelectProduct={this.onSelectProduct}
+            loading={this.state.groomingLoading}
           />
           <CategoryTile
             title={mowStrings.homeScreen.health}
             data={Food}
             onSelectProduct={this.onSelectProduct}
+            loading={this.state.healthLoading}
           />
           <CategoryTile
             title={mowStrings.homeScreen.bath}
             data={Food}
             onSelectProduct={this.onSelectProduct}
+            loading={this.state.bathLoading}
           />
         </ScrollView>
       </MowContainer>
