@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import {View, Text, Image} from 'react-native';
 import {mowStrings} from '../../../values/Strings/MowStrings';
 import {mowColors} from '../../../values/Colors/MowColors';
@@ -17,7 +18,7 @@ import {MowButtonBasic} from '../../../components/ui/Common/Button/MowButton';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {MowCheckBox} from '../../../components/ui/Common/CheckBox/MowCheckBox';
 
-export default class PaymentInformation extends React.Component {
+ class PaymentInformation extends React.Component {
   state = {
     creditCard: true,
     paypal: false,
@@ -34,7 +35,15 @@ export default class PaymentInformation extends React.Component {
     });
   };
 
+  completePayment = () => {
+    const { cartItems } = this.props;
+
+    console.log("makeapaymentpage",cartItems)
+    {}
+  }
+
   render() {
+
     return (
       <MowContainer
         style={{backgroundColor: mowColors.pageBGDarkColor}}
@@ -197,7 +206,8 @@ export default class PaymentInformation extends React.Component {
           {/* complete payment button */}
           <MowButtonBasic
             onPress={() => {
-              this.props.navigation.navigate('CompleteOrder');
+              // this.props.navigation.navigate('CompleteOrder');
+              this.completePayment()
             }}
             size={'medium'}
             type={'success'}>
@@ -208,6 +218,11 @@ export default class PaymentInformation extends React.Component {
     );
   }
 }
+const mapStateToProps = state => ({
+  cartItems: state.products.cartItems
+})
+
+export default connect(mapStateToProps,null)(PaymentInformation)
 
 const paymentStyle = {
   container: {
