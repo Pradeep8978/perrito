@@ -20,6 +20,7 @@ import {
 import {MowInfoHeader} from '../../../components/ui/MowInfoHeader';
 import {MowCheckBox} from '../../../components/ui/Common/CheckBox/MowCheckBox';
 import {connect} from 'react-redux';
+import {saveDeliveryAddress} from '../../../actions/orders.actions';
 
 class Settings extends React.Component {
   state = {
@@ -49,6 +50,7 @@ class Settings extends React.Component {
       addressSelected: checkBoxArr[index],
       addressListKey: this.state.addressListKey + 1,
     });
+    this.props.saveDeliveryAddress(item);
   }
 
   _goToPayment() {
@@ -215,4 +217,8 @@ const mapStateToProps = state => ({
   profile: state.auth.profile
 })
 
-export default connect(mapStateToProps, {})(Settings);
+const mapDispatchToProps = {
+  saveDeliveryAddress
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Settings);

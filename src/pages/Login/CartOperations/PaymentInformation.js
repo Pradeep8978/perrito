@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import {View, Text, Image} from 'react-native';
 import {mowStrings} from '../../../values/Strings/MowStrings';
 import {mowColors} from '../../../values/Colors/MowColors';
@@ -17,8 +17,14 @@ import {MowInput} from '../../../components/ui/Common/Input/MowInput';
 import {MowButtonBasic} from '../../../components/ui/Common/Button/MowButton';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {MowCheckBox} from '../../../components/ui/Common/CheckBox/MowCheckBox';
+import Axios from 'axios';
+import {
+  _successDialog,
+  _warningDialog,
+} from '../../../components/ui/Common/Dialog/MowDialogFunctions';
+import { API_BASE_URL } from '../../../constants/config';
 
- class PaymentInformation extends React.Component {
+class PaymentInformation extends React.Component {
   state = {
     creditCard: true,
     paypal: false,
@@ -36,14 +42,35 @@ import {MowCheckBox} from '../../../components/ui/Common/CheckBox/MowCheckBox';
   };
 
   completePayment = () => {
-    const { cartItems } = this.props;
+    const {cartItems, deliveryAddress} = this.props;
+    delete deliveryAddress._id;
+    const url = `${API_BASE_URL}/orders/order/new`;
+    const bodyParams = {
+      orders: cartItems.map(item => ({
+        productId: item._id,
+        quantity: item.cartCount,
+        amount: item.price * item.cartCount,
+        address: {
+          name: "Pradeep Reddy",
+          phone: "8978684171",
+          ...deliveryAddress,
+        },
+        transactionId: '684684',
+        isCod: false
+      })),
 
-    console.log("makeapaymentpage",cartItems)
-    {}
-  }
+    };
+    Axios.post(url, bodyParams)
+      .then(res => {
+        console.log('RESPONSE +>', res);
+        this.props.navigation.navigate('CompleteOrder');
+      })
+      .catch(err => {
+        _warningDialog('Alert', 'Failed to complete Order');
+      });
+  };
 
   render() {
-
     return (
       <MowContainer
         style={{backgroundColor: mowColors.pageBGDarkColor}}
@@ -207,7 +234,7 @@ import {MowCheckBox} from '../../../components/ui/Common/CheckBox/MowCheckBox';
           <MowButtonBasic
             onPress={() => {
               // this.props.navigation.navigate('CompleteOrder');
-              this.completePayment()
+              this.completePayment();
             }}
             size={'medium'}
             type={'success'}>
@@ -219,10 +246,10 @@ import {MowCheckBox} from '../../../components/ui/Common/CheckBox/MowCheckBox';
   }
 }
 const mapStateToProps = state => ({
-  cartItems: state.products.cartItems
-})
+  cartItems: state.products.cartItems,
+});
 
-export default connect(mapStateToProps,null)(PaymentInformation)
+export default connect(mapStateToProps, null)(PaymentInformation);
 
 const paymentStyle = {
   container: {

@@ -74,7 +74,7 @@ class NewAddress extends React.Component {
           'Success',
           'Address successfully added. Please select default address',
         );
-        this.props.navigation.navigate('AddressList');
+        this.props.navigation.goBack();
       })
       .catch(err => {
         _warningDialog(
@@ -83,6 +83,18 @@ class NewAddress extends React.Component {
         );
       });
   };
+
+  componentDidMount(){
+    this._unsubscribe = this.props.navigation.addListener('state', () => {
+        this.setState({
+          formValues: {}
+        })
+    });
+  }
+
+  componentWillUnmount() {
+    this._unsubscribe();
+  }
 
   render() {
     return (

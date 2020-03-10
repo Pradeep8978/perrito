@@ -104,198 +104,184 @@ export default class Cart extends React.Component {
       <MowContainer
         footerActiveIndex={3}
         title={mowStrings.cart}
-        style={{backgroundColor: "#fff"}}>
-        {this.props.cartItems ? 
-        <View>
-        <Image source={require('./../../../assets/image/empty-cart.gif')} style={{width: "100%", marginTop: 150}}/> 
-        <Text style={{fontSize:30, color: '#ccc', textAlign: 'center', fontFamily: "Poppins-SemiBold"}}>No Items in Cart</Text>
-        </View> :
-        <View>
-                <KeyboardAwareScrollView style={{marginBottom: hp('7%')}}>
-          <FlatList
-            // key={this.state.cartDataListKey}
-            style={{marginTop: -5}}
-            keyExtractor={(item, index) => index.toString()}
-            data={this.props.cartItems}
-            renderItem={({item, index}) => (
-              <View
-                key={index}
-                style={[
-                  categoryStyleWithoutShadow,
-                  {
-                    flexDirection: 'row',
-                    marginVertical: 5,
-                    backgroundColor: mowColors.viewBGColor,
-                    padding: 10,
-                  },
-                ]}>
+        style={{backgroundColor: '#fff'}}>
+        {!this.props.cartItems.length ? (
+          <View>
+            <Image
+              source={require('./../../../assets/image/empty-cart.gif')}
+              style={{width: '100%', marginTop: 150}}
+            />
+            <Text
+              style={{
+                fontSize: 30,
+                color: '#ccc',
+                textAlign: 'center',
+                fontFamily: 'Poppins-SemiBold',
+              }}>
+              No Items in Cart
+            </Text>
+          </View>
+        ) : (
+          <KeyboardAwareScrollView style={{marginBottom: hp('2%')}}>
+            <FlatList
+              // key={this.state.cartDataListKey}
+              style={{marginTop: -5}}
+              keyExtractor={(item, index) => index.toString()}
+              data={this.props.cartItems}
+              renderItem={({item, index}) => (
                 <View
-                  style={{
-                    flex: 1.5,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}>
-                  <Image
-                    resizeMode={'contain'}
-                    style={{width: hp('10%'), height: hp('10%')}}
-                    source={item['image']}
-                  />
-                </View>
-
-                <View style={{flex: 4, marginLeft: 10}}>
-                  {/* product title text */}
-                  <Text
+                  key={index}
+                  style={[
+                    categoryStyleWithoutShadow,
+                    {
+                      flexDirection: 'row',
+                      marginVertical: 5,
+                      backgroundColor: mowColors.viewBGColor,
+                      padding: 10,
+                    },
+                  ]}>
+                  <View
                     style={{
-                      fontSize: hp('1.8%'),
-                      fontWeight: '600',
-                      fontStyle: 'normal',
-                      textAlign: 'left',
-                      color: mowColors.titleTextColor,
-                      marginBottom: 10,
-                      paddingRight: 5,
-                      fontFamily: fontFamily.semiBold,
+                      flex: 1.5,
+                      alignItems: 'center',
+                      justifyContent: 'center',
                     }}>
-                    {item['name']}
-                  </Text>
+                    <Image
+                      resizeMode={'contain'}
+                      style={{width: hp('10%'), height: hp('10%')}}
+                      source={item['image']}
+                    />
+                  </View>
 
-                  <View style={{alignItems: 'center', flexDirection: 'row'}}>
-                    {/* price view */}
-                    <View style={{flex: 1.5}}>
-                      <Text
-                        style={{
-                          fontSize: hp('2%'),
-                          fontWeight: 'bold',
-                          fontStyle: 'normal',
-                          letterSpacing: 0,
-                          textAlign: 'left',
-                          color: mowColors.titleTextColor,
-                          fontFamily: fontFamily.bold,
-                        }}>
-                        {`₹ ${item.price * item.cartCount}`}
-                      </Text>
-                    </View>
-                    <View
+                  <View style={{flex: 4, marginLeft: 10}}>
+                    {/* product title text */}
+                    <Text
                       style={{
-                        flex: 3,
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        alignSelf: 'center',
-                        justifyContent: 'center',
+                        fontSize: hp('1.8%'),
+                        fontWeight: '600',
+                        fontStyle: 'normal',
+                        textAlign: 'left',
+                        color: mowColors.titleTextColor,
+                        marginBottom: 10,
+                        paddingRight: 5,
+                        fontFamily: fontFamily.light,
                       }}>
-                      {/* minus button view */}
-                      <TouchableOpacity
-                        disabled={item.cartCount === 1}
-                        onPress={() => {
-                          this.props.decrementCartItem(index);
-                        }}
-                        style={minusPlusStyle.container}>
-                        <Text style={minusPlusStyle.text}>-</Text>
-                      </TouchableOpacity>
+                      {item['name']}
+                    </Text>
 
-                      {/* product cartCount text */}
-                      <Text
+                    <View style={{alignItems: 'center', flexDirection: 'row'}}>
+                      {/* price view */}
+                      <View style={{flex: 1.5}}>
+                        <Text
+                          style={{
+                            fontSize: hp('2%'),
+                            fontWeight: 'bold',
+                            fontStyle: 'normal',
+                            letterSpacing: 0,
+                            textAlign: 'left',
+                            color: mowColors.titleTextColor,
+                            fontFamily: fontFamily.bold,
+                          }}>
+                          {`₹ ${item.price * item.cartCount}`}
+                        </Text>
+                      </View>
+                      <View
                         style={{
-                          fontSize: hp('2%'),
-                          fontWeight: '600',
-                          fontStyle: 'normal',
-                          letterSpacing: 0,
-                          textAlign: 'center',
-                          color: mowColors.titleTextColor,
-                          marginHorizontal: 15,
-                          fontFamily: fontFamily.semiBold,
+                          flex: 3,
+                          flexDirection: 'row',
+                          alignItems: 'center',
+                          alignSelf: 'center',
+                          justifyContent: 'center',
                         }}>
-                        {item['cartCount']}
-                      </Text>
+                        {/* minus button view */}
+                        <TouchableOpacity
+                          disabled={item.cartCount === 1}
+                          onPress={() => {
+                            this.props.decrementCartItem(index);
+                          }}
+                          style={minusPlusStyle.container}>
+                          <Text style={minusPlusStyle.text}>-</Text>
+                        </TouchableOpacity>
 
-                      {/* plus button view*/}
+                        {/* product cartCount text */}
+                        <Text
+                          style={{
+                            fontSize: hp('2%'),
+                            fontWeight: '600',
+                            fontStyle: 'normal',
+                            letterSpacing: 0,
+                            textAlign: 'center',
+                            color: mowColors.titleTextColor,
+                            marginHorizontal: 15,
+                            fontFamily: fontFamily.semiBold,
+                          }}>
+                          {item['cartCount']}
+                        </Text>
+
+                        {/* plus button view*/}
+                        <TouchableOpacity
+                          onPress={() => {
+                            this.props.incrementCartItem(index);
+                          }}
+                          style={minusPlusStyle.container}>
+                          <Text style={minusPlusStyle.text}>+</Text>
+                        </TouchableOpacity>
+                      </View>
+
                       <TouchableOpacity
                         onPress={() => {
-                          this.props.incrementCartItem(index);
+                          this.props.removeCartItem(index);
                         }}
-                        style={minusPlusStyle.container}>
-                        <Text style={minusPlusStyle.text}>+</Text>
+                        style={{flex: 1}}>
+                        <FeatherIcon
+                          style={{
+                            textAlign: 'center',
+                            color: mowColors.mainColor,
+                            fontSize: hp('2.5%'),
+                          }}
+                          name={'trash-2'}
+                        />
                       </TouchableOpacity>
                     </View>
-
-                    <TouchableOpacity
-                      onPress={() => {
-                        this.props.removeCartItem(index);
-                      }}
-                      style={{flex: 1}}>
-                      <FeatherIcon
-                        style={{
-                          textAlign: 'center',
-                          color: mowColors.mainColor,
-                          fontSize: hp('2.5%'),
-                        }}
-                        name={'trash-2'}
-                      />
-                    </TouchableOpacity>
                   </View>
                 </View>
-              </View>
-            )}
-          />
-
-          {/* coupon view */}
-          <View
-            style={{
-              flexDirection: 'row',
-              backgroundColor: mowColors.viewBGColor,
-              borderRadius: 5,
-              alignSelf: 'center',
-              height: hp('5.5%'),
-              marginVertical: hp('1%'),
-              width: '90%',
-            }}>
-            <MowInput
-              containerStyle={{
-                flex: 3,
-                borderWidth: 0,
-                backgroundColor: 'transparent',
-              }}
-              iconColor={'#b6babe'}
-              textInputStyle={{fontFamily: fontFamily.regular}}
-              placeholder={mowStrings.placeholder.couponCode}
-              leftIcon={'percent'}
+              )}
             />
 
-            <MowButtonBasic
-              containerStyle={{flex: 1, backgroundColor: mowColors.mainColor}}
-              size={'small'}
-              type={'success'}>
-              {mowStrings.button.apply}
-            </MowButtonBasic>
-          </View>
-        </KeyboardAwareScrollView>
+            {/* coupon view */}
+            <View
+              style={{
+                flexDirection: 'row',
+                backgroundColor: mowColors.viewBGColor,
+                borderRadius: 5,
+                alignSelf: 'center',
+                height: hp('5.5%'),
+                marginVertical: hp('1%'),
+                width: '90%',
+              }}>
+              <MowInput
+                containerStyle={{
+                  flex: 3,
+                  borderWidth: 0,
+                  backgroundColor: 'transparent',
+                }}
+                iconColor={'#b6babe'}
+                textInputStyle={{fontFamily: fontFamily.regular}}
+                placeholder={mowStrings.placeholder.couponCode}
+                leftIcon={'percent'}
+              />
 
-        <MowButtonBasic
-          onPress={() => {
-            this.props.navigation.navigate('Home');
-          }}
-          style={{marginTop: hp('5%')}}
-          btnStyle={{
-            borderRadius: 50,
-            shadowColor: '#30C1DD',
-            shadowRadius: 50,
-            shadowOpacity: 0.9,
-            elevation: 3,
-            shadowOffset: {
-              width: 10,
-              height: 10,
-            },
-          }}
-          containerStyle={{marginTop: hp('5%')}}
-          textStyle={{
-            color: mowColors.mainColor,
-            fontWeight: 'normal',
-            letterSpacing: 0,
-          }}
-          type={'default'}>
-          {mowStrings.button.continue}
-        </MowButtonBasic>
+              <MowButtonBasic
+                containerStyle={{flex: 1, backgroundColor: mowColors.mainColor}}
+                size={'small'}
+                type={'success'}>
+                {mowStrings.button.apply}
+              </MowButtonBasic>
+            </View>
+          </KeyboardAwareScrollView>
+        )}
 
-        <View style={{width: '90%', alignSelf: 'center', alignItems: 'center'}}>
+        {this.props.cartItems.length>0 &&<View style={{width: '90%', alignSelf: 'center', alignItems: 'center'}}>
           {/* cart total ui */}
           <View
             style={{
@@ -319,20 +305,6 @@ export default class Cart extends React.Component {
                 </Text>
               </View>
 
-              {/* coupon row view */}
-              {/* <View
-                                style={this.cartTotalStyle.rowView}>
-                                <Text
-                                    style={this.cartTotalStyle.title}>
-                                    {mowStrings.cartScreen.coupon}:
-                                </Text>
-                                <Text
-                                    style={this.cartTotalStyle.content}>
-                                    $0
-                                </Text>
-                            </View> */}
-
-              {/* shipping row view */}
               <View style={this.cartTotalStyle.rowView}>
                 {/* sub total text */}
                 <Text style={this.cartTotalStyle.title}>
@@ -363,17 +335,33 @@ export default class Cart extends React.Component {
               </Text>
             </View>
           </View>
+          <MowButtonBasic
+            onPress={() => {
+              this.props.navigation.navigate('Home');
+            }}
+            btnStyle={{
+              borderWidth: 1.5,
+              borderColor: mowColors.mainColor,
+            }}
+            textStyle={{
+              color: mowColors.mainColor,
+              fontWeight: 'normal',
+              letterSpacing: 0,
+              fontSize:16
+            }}
+            type={'default'}>
+            {mowStrings.button.continue}
+          </MowButtonBasic>
 
           <MowButtonBasic
             onPress={() => {
               this.props.navigation.navigate('AddressList', {cart: true});
             }}
+            textStyle={{fontSize:16}}
             type={'success'}>
             {mowStrings.button.completeShopping}
           </MowButtonBasic>
-        </View>
-        </View>
-      }
+        </View>}
       </MowContainer>
     );
   }
