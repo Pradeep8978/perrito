@@ -1,5 +1,5 @@
 import React from "react";
-import {Text, View, Image, FlatList, TouchableOpacity, ScrollView} from "react-native";
+import {Text, View, Image, FlatList, TouchableOpacity, ActivityIndicator} from "react-native";
 import {mowColors} from "../../values/Colors/MowColors";
 import {categoryStyle, fontFamily, gPadding} from "../../values/Styles/MowStyles";
 import {MowTitleView} from "../../components/ui/MowTitleView";
@@ -18,8 +18,12 @@ const CategoryTile = props => {
         <MowTitleView
             showButton={false}
             title={title}/>
-
-        {/* smart phones list */}
+        {props.loading ?
+          <ActivityIndicator
+              style={{justifyContent: 'center', marginVertical: 20}}
+              size="large"
+              color={mowColors.mainColor}
+            /> :
         <FlatList
             showsHorizontalScrollIndicator={false}
             keyExtractor={(item, index) => index.toString()}
@@ -231,6 +235,7 @@ const CategoryTile = props => {
 
             )}
         />
+                            }
 
     </View>
     )
