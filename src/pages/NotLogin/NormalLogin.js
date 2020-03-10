@@ -78,7 +78,7 @@ export default class NormalLogin extends React.Component {
     return (
       <View>
         <Text style={{color: 'red', textAlign: 'center'}}>
-          Invalid Username and Password
+          Invalid Username or Password
         </Text>
       </View>
     );

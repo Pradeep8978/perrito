@@ -37,9 +37,6 @@ import {MowCheckBox} from '../../../components/ui/Common/CheckBox/MowCheckBox';
 
   completePayment = () => {
     const { cartItems } = this.props;
-
-    console.log("makeapaymentpage",cartItems)
-    {}
   }
 
   render() {

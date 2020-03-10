@@ -188,14 +188,11 @@ export default class ProductList extends React.Component {
 
     isExistCart = (item) => {
         const {cartItems} = this.props;
-        console.log('CART ITEMS =>', cartItems)
-        console.log('OUR ITEM =>', item)
         const isExist = cartItems.find(o => o._id === item._id);
         return isExist;
     }
 
     render() {
-        console.log('PROODUCTS LIST ===============>', this.props.productList);
         return(
 
             <MowContainer
