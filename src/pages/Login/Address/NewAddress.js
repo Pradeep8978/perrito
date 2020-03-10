@@ -1,10 +1,13 @@
 import React from 'react';
+import { Text} from 'react-native'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {mowStrings} from '../../../values/Strings/MowStrings';
 import {mowColors} from '../../../values/Colors/MowColors';
 import MowContainer from '../../../components/ui/Core/Container/MowContainer';
 import {MowInput} from '../../../components/ui/Common/Input/MowInput';
 import {MowButtonBasic} from '../../../components/ui/Common/Button/MowButton';
+import {validationConfig} from '../../NotLogin/Register/validations';
+
 import {
   borderStyle,
   fontFamily,
@@ -52,6 +55,8 @@ class NewAddress extends React.Component {
       state: '',
       pincode: '',
     },
+    error:"",
+    formErrors: {},
   };
 
   // to store entered regular from user
@@ -63,10 +68,25 @@ class NewAddress extends React.Component {
       },
     }));
   };
+  
+  validateAllFields = () => {
+    const {formValues} = this.state;
+    const formErrors = {};
+    let isValid = true;
+    Object.keys(formValues).forEach(key => {
+      const validaionFunc = validationConfig[key];
+      const errormessage = validaionFunc ? validaionFunc(formValues[key]) : '';
+      formErrors[key] = errormessage;
+      if (errormessage) isValid = false;
+    });
+    this.setState({formErrors});
+    return isValid;
+  };
 
   onSaveAddress = () => {
     const {formValues} = this.state;
     const url = `${API_BASE_URL}/customers/profile/address/new`;
+    if (!this.validateAllFields()) return;
     Axios.post(url, formValues)
       .then(res => {
         this.props.fetchUserProfile();
@@ -84,19 +104,21 @@ class NewAddress extends React.Component {
       });
   };
 
-  componentDidMount(){
-    this._unsubscribe = this.props.navigation.addListener('state', () => {
-        this.setState({
-          formValues: {}
-        })
-    });
-  }
+  // componentDidMount(){
+  //   this._unsubscribe = this.props.navigation.addListener('state', () => {
+  //       this.setState({
+  //         formValues: {}
+  //       })
+  //   });
+  // }
 
-  componentWillUnmount() {
-    this._unsubscribe();
-  }
+  // componentWillUnmount() {
+  //   this._unsubscribe();
+  // }
 
   render() {
+    const {formErrors} = this.state;
+    console.log("formErros==========>", formErrors)
     return (
       <MowContainer title={mowStrings.button.addNewAddress}>
         <KeyboardAwareScrollView
@@ -111,6 +133,9 @@ class NewAddress extends React.Component {
             leftIcon={'user'}
             type={'text'}
           />
+            <Text style={{color: 'red', fontSize: 12}}>
+                {formErrors && formErrors.name}
+              </Text>
 
           {/* phone input */}
           <MowInput
@@ -121,6 +146,9 @@ class NewAddress extends React.Component {
             leftIcon={'phone'}
             type={'number'}
           />
+            <Text style={{color: 'red', fontSize: 12}}>
+                {formErrors && formErrors.phone}
+              </Text>
 
           {/* address title input */}
           <MowInput
@@ -131,6 +159,9 @@ class NewAddress extends React.Component {
             leftIcon={'navigation'}
             type={'text'}
           />
+          <Text style={{color: 'red', fontSize: 12}}>
+                {formErrors && formErrors.address_line_1}
+              </Text>
 
           <MowInput
             containerStyle={this.inputStyle.container}
@@ -140,6 +171,9 @@ class NewAddress extends React.Component {
             leftIcon={'navigation'}
             type={'text'}
           />
+          <Text style={{color: 'red', fontSize: 12}}>
+                {formErrors && formErrors.address_line_2}
+              </Text>
 
           <MowInput
             containerStyle={this.inputStyle.container}
@@ -149,6 +183,9 @@ class NewAddress extends React.Component {
             leftIcon={'map'}
             type={'text'}
           />
+           <Text style={{color: 'red', fontSize: 12}}>
+                {formErrors && formErrors.landmark}
+              </Text>
 
           <MowInput
             containerStyle={this.inputStyle.container}
@@ -158,6 +195,9 @@ class NewAddress extends React.Component {
             leftIcon={'navigation'}
             type={'text'}
           />
+           <Text style={{color: 'red', fontSize: 12}}>
+                {formErrors && formErrors.city}
+              </Text>
 
           <MowInput
             containerStyle={this.inputStyle.container}
@@ -167,6 +207,9 @@ class NewAddress extends React.Component {
             leftIcon={'map-pin'}
             type={'text'}
           />
+            <Text style={{color: 'red', fontSize: 12}}>
+                {formErrors && formErrors.state}
+              </Text>
 
           <MowInput
             containerStyle={this.inputStyle.container}
@@ -176,6 +219,9 @@ class NewAddress extends React.Component {
             leftIcon={'hash'}
             type={'text'}
           />
+           <Text style={{color: 'red', fontSize: 12}}>
+                {formErrors && formErrors.pincode}
+              </Text>
         </KeyboardAwareScrollView>
 
         <View style={{marginHorizontal: wp('3%')}}>
