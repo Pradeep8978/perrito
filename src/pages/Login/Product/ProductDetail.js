@@ -338,6 +338,7 @@ export default class ProductDetail extends React.Component {
   render() {
     // const product = this.state.product;
     const product = this.props.selectedProduct;
+    console.log('PRODUCTS =>', product);
     const {CustomerComments, reviewsListLoading, reviewsListError} = this.state;
     return (
       <MowContainer

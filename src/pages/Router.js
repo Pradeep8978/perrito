@@ -22,10 +22,10 @@ import ProductDetail from "./../containers/productDetails.container";
 import Cart from "./../containers/cart.container";
 import AddressList from "./Login/Address/AddressList";
 import NewAddress from "./Login/Address/NewAddress";
-import PaymentInformation from "./Login/CartOperations/PaymentInformation";
+import PaymentInformation from "./../containers/payment.container";
 import CompleteOrder from "./Login/CartOperations/CompleteOrder";
 
-import OrderList from "./Login/Orders/OrderList";
+import OrderList from "./../containers/orders.container";
 import Profile from "./../containers/profile.container";
 import Password from "./Login/User/Password";
 import Favorites from "./Login/Favorites/Favorites";

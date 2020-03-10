@@ -105,8 +105,14 @@ export default class Cart extends React.Component {
       <MowContainer
         footerActiveIndex={3}
         title={mowStrings.cart}
-        style={{backgroundColor: mowColors.pageBGDarkColor}}>
-        <KeyboardAwareScrollView style={{marginBottom: hp('7%')}}>
+        style={{backgroundColor: "#fff"}}>
+        {this.props.cartItems ? 
+        <View>
+        <Image source={require('./../../../assets/image/empty-cart.gif')} style={{width: "100%", marginTop: 150}}/> 
+        <Text style={{fontSize:30, color: '#ccc', textAlign: 'center', fontFamily: "Poppins-SemiBold"}}>No Items in Cart</Text>
+        </View> :
+        <View>
+                <KeyboardAwareScrollView style={{marginBottom: hp('7%')}}>
           <FlatList
             // key={this.state.cartDataListKey}
             style={{marginTop: -5}}
@@ -341,6 +347,8 @@ export default class Cart extends React.Component {
             {mowStrings.button.completeShopping}
           </MowButtonBasic>
         </View>
+        </View>
+      }
       </MowContainer>
     );
   }
