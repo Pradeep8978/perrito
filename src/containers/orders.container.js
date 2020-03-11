@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import {fetchOrders} from './../actions/orders.actions';
-import Orders from '../pages/Login/Product/ProductList';
+import OrdersInfo from '../pages/Login/Orders/OrderList';
 
 const mapStateToProps = state => ({
     orderList: state.orders.orderList,
@@ -11,4 +11,4 @@ const mapDispatchToProps = {
     fetchOrders
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Orders);
+export default connect(mapStateToProps, mapDispatchToProps)(OrdersInfo);
