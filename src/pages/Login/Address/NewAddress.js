@@ -92,14 +92,14 @@ class NewAddress extends React.Component {
         this.props.fetchUserProfile();
         _successDialog(
           'Success',
-          'Address successfully added. Please select default address',
+          'Address successfully updated',
         );
         this.props.navigation.goBack();
       })
       .catch(err => {
         _warningDialog(
           'Failed',
-          'Unable to save address please try again later',
+          'Unable to update address please try again later',
         );
       });
   };

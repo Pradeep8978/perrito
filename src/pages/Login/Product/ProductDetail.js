@@ -75,13 +75,26 @@ export default class ProductDetail extends React.Component {
   };
 
   componentDidMount = () => {
+    // const {selectedProduct} = this.props;
     this.fetchUserReviews();
+    // this.props.fetchReviews(selectedProduct._id);
   };
+
+  componentDidUpdate(prevProps){
+    const {selectedProduct} = this.props;
+    if(selectedProduct._id !== prevProps.selectedProduct._id){
+      this.fetchUserReviews();
+    }
+  }
 
   fetchUserReviews = () => {
     const {selectedProduct} = this.props;
     const url = `${API_BASE_URL}/reviews/customerReview/list/${selectedProduct._id}`;
-    this.setState({reviewsListLoading: true});
+    this.setState({
+      reviewsListLoading: true, 
+      CustomerComments: [],
+      reviewsListError: null
+    });
     Axios.get(url)
       .then(res => {
         if (res.data.length) {
@@ -269,19 +282,18 @@ export default class ProductDetail extends React.Component {
     console.log('URL =>?', url);
     Axios.post(url, body)
       .then(res => {
-        // _successDialog(
-        //   'Success',
-        //   'Thankyou for reviewing this product',
-        // );
+        _successDialog(
+          'Success',
+          'Thankyou for reviewing this product',
+        );
         this.setState({reviewLoading: false, showModal: false});
       })
       .catch(err => {
         console.log('error =>', err);
         _warningDialog(
           'Failed',
-          err.response.error ||
-            'Unable to submit your Review on product. please try again later',
-        );
+          'Unable to submit your Review on product. please try again later'
+        )
       })
       .finally(() => {
         this.setState({reviewLoading: false, showModal: false});
@@ -337,6 +349,7 @@ export default class ProductDetail extends React.Component {
 
   render() {
     // const product = this.state.product;
+    console.log("reviews============>", this.props.reviewsList)
     const product = this.props.selectedProduct;
     console.log('PRODUCTS =>', product);
     const {CustomerComments, reviewsListLoading, reviewsListError} = this.state;

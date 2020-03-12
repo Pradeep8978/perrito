@@ -79,7 +79,7 @@ const MowFooter = props => {
             styles.buttonText,
             {color: props.activeIndex === 2 ? mowColors.mainColor : '#a1a1a1'},
           ]}>
-          {mowStrings._categories}
+          {mowStrings._upcoming}
         </Text>
       </TouchableOpacity>
 

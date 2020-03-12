@@ -5,6 +5,9 @@ const INITIAL_STATE = {
   loading: false,
   error: null,
   cartItems: [],
+  reviewsList:[],
+  reviewsLoading: false,
+  reviewsError: null
 };
 
 const productsReducer = (state = INITIAL_STATE, action) => {
@@ -76,6 +79,26 @@ const productsReducer = (state = INITIAL_STATE, action) => {
         ...state,
         cartItems: [],
       };
+
+      case types.FETCH_REVIEWS_LOADING:
+        return {
+          ...state,
+          reviewsLoading: true,
+          reviewsError: null,
+          reviewsList: [],
+        };
+      case types.FETCH_REVIEWS_SUCCESS:
+        return {
+          ...state,
+          reviewsLoading: false,
+          reviewsList: action.payload,
+        };
+      case types.FETCH_REVIEWS_FAILURE:
+        return {
+          ...state,
+          reviewsLoading: false,
+          reviewsError: action.payload,
+        };
 
     default:
       return state;

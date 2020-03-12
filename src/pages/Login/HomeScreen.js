@@ -92,7 +92,7 @@ export default class HomeScreen extends React.Component {
   };
 
   render() {
-    const {BestSeller, Food} = this.state;
+    const {BestSeller, Food, Health, Bath, Accessories, Grooming, Toys} = this.state;
     return (
       <MowContainer footerActiveIndex={1} navbar={false}>
         {/* home screen navbar */}
@@ -514,7 +514,7 @@ export default class HomeScreen extends React.Component {
             />
           </View>
           {/* smart phones view */}
-          
+
           <CategoryTile
             title={mowStrings.homeScreen.food}
             data={Food}
@@ -523,31 +523,31 @@ export default class HomeScreen extends React.Component {
           />
           <CategoryTile
             title={mowStrings.homeScreen.toys}
-            data={Food}
+            data={Toys}
             onSelectProduct={this.onSelectProduct}
             loading={this.state.toysLoading}
           />
           <CategoryTile
             title={mowStrings.homeScreen.accessories}
-            data={Food}
+            data={Accessories}
             onSelectProduct={this.onSelectProduct}
             loading={this.state.accessoriesLoading}
           />
           <CategoryTile
             title={mowStrings.homeScreen.grooming}
-            data={Food}
+            data={Grooming}
             onSelectProduct={this.onSelectProduct}
             loading={this.state.groomingLoading}
           />
           <CategoryTile
             title={mowStrings.homeScreen.health}
-            data={Food}
+            data={Health}
             onSelectProduct={this.onSelectProduct}
             loading={this.state.healthLoading}
           />
           <CategoryTile
             title={mowStrings.homeScreen.bath}
-            data={Food}
+            data={Bath}
             onSelectProduct={this.onSelectProduct}
             loading={this.state.bathLoading}
           />
