@@ -57,12 +57,30 @@ export const validatePinCode = value => {
     return error;
 }
 
+
+export const validateDateOfBirth = value => {
+    let error;
+    if(!value){
+        error = 'Date of Birth is Required'
+    }
+    return error;
+}
+
+export const validateGender = value => {
+    let error;
+    if(!value){
+        error = 'Gender is Required'
+    }
+    return error;
+}
+
+
 // newAddress validations
 
 export const validateAdressLine1 = value => {
     let error;
     if(!value){
-        error = 'address line1 is Required'
+        error = 'Address line1 is Required'
     }
     return error;
 }
@@ -70,7 +88,7 @@ export const validateAdressLine1 = value => {
 export const validateAdressLine2 = value => {
     let error;
     if(!value){
-        error = 'address line2 is Required'
+        error = 'Address line2 is Required'
     }
     return error;
 }
@@ -84,7 +102,7 @@ export const validateLandMark = value => {
 export const validateCity = value => {
     let error;
     if(!value){
-        error = 'city is Required'
+        error = 'City is Required'
     }
     return error;
 }
@@ -96,16 +114,39 @@ export const validatestate = value => {
     return error;
 }
 
+export const validateTitle = value => {
+    let error;
+    if(!value){
+        error = 'Title is Required'
+    }
+    return error;
+}
+
+export const validateMessage = value => {
+    let error;
+    if(!value){
+        error = 'Message is Required'
+    }
+    return error;
+}
+
+
+
+
 
 export const validationConfig = {
     name: validateName,
     email: validateEmail,
     phone: validatePhoneNumber,
+    dob:validateDateOfBirth,  
+    gender:validateGender,
     password: validatePassword,
     pincode:validatePinCode,
     address_line_1:validateAdressLine1,
     address_line_2:validateAdressLine2,
     landmark:validateLandMark,
     city:validateCity,
-    state:validatestate
+    state:validatestate,
+    title:validateTitle,
+    message:validateMessage
 }
