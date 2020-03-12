@@ -8,27 +8,27 @@ import {heightPercentageToDP as hp, widthPercentageToDP as wp} from "react-nativ
 // import {withNavigation} from "react-navigation";
 import { useNavigation } from '@react-navigation/native';
 
-class MowOrderViewItem extends React.Component {
+const MowOrderViewItem = (props) => {
 
-    static propTypes = {
-        product: PropTypes.object,
-        key: PropTypes.number,
-        opacity: PropTypes.bool
-    };
+    // static propTypes = {
+    //     product: PropTypes.object,
+    //     key: PropTypes.number,
+    //     opacity: PropTypes.bool
+    // };
 
-    orderStyle = {
+    const orderStyle = {
         icon: {
             color: mowColors.mainColor,
             fontSize: hp("2.5%")
         }
     };
 
-    render() {
-        const value = this.props.product;
+        const value = props.product;
+        const navigation = useNavigation();
         return(
 
             <TouchableOpacity
-                onPress={() => {useNavigation().navigate("OrderDetail", {product: value})}}
+                onPress={() => {navigation.navigate("OrderDetail", {product: value})}}
                 style={{
                     marginHorizontal: wp("5%"),
                     marginVertical: hp("1%"),
@@ -38,7 +38,7 @@ class MowOrderViewItem extends React.Component {
                     ...borderStyle,
                     borderWidth: 1.5
                 }}
-                key={this.props.key}>
+                key={props.key}>
 
                 {/* product image */}
                 <View
@@ -50,7 +50,7 @@ class MowOrderViewItem extends React.Component {
                         style={{height: hp("8%"), width: hp("8%"), borderRadius: 10}}/>
 
                     {
-                        this.props.opacity &&
+                        props.opacity &&
 
                             <View
                                 style={{
@@ -133,7 +133,7 @@ class MowOrderViewItem extends React.Component {
 
                             <FeatherIcon
                                 name={"truck"}
-                                style={[this.orderStyle.icon]}/>
+                                style={[orderStyle.icon]}/>
                         }
 
                         {
@@ -141,7 +141,7 @@ class MowOrderViewItem extends React.Component {
 
                             <FeatherIcon
                                 name={"check-circle"}
-                                style={[this.orderStyle.icon, {color: "#65b707"}]}/>
+                                style={[orderStyle.icon, {color: "#65b707"}]}/>
                         }
 
                         {
@@ -149,7 +149,7 @@ class MowOrderViewItem extends React.Component {
 
                             <FeatherIcon
                                 name={"x-circle"}
-                                style={this.orderStyle.icon}/>
+                                style={orderStyle.icon}/>
                         }
 
                         {
@@ -157,7 +157,7 @@ class MowOrderViewItem extends React.Component {
 
                             <FeatherIcon
                                 name={"x-circle"}
-                                style={this.orderStyle.icon}/>
+                                style={orderStyle.icon}/>
                         }
 
                         {/* order situation */}
@@ -190,7 +190,7 @@ class MowOrderViewItem extends React.Component {
                             fontStyle: "normal",
                             letterSpacing: 0,
                             textAlign: "left",
-                            color: this.props.opacity ? "#b6babe" : "#48bb20"
+                            color: props.opacity ? "#b6babe" : "#48bb20"
                         }}>
 
                         {value["currency"]}{value["price"]}
@@ -219,8 +219,6 @@ class MowOrderViewItem extends React.Component {
             </TouchableOpacity>
 
         )
-
-    }
-}
+                    }
 
 export default MowOrderViewItem;

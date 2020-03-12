@@ -48,7 +48,7 @@ export default class OrderDetail extends React.Component {
     render() {
 
         // product info
-        const product = this.props.navigation.getParam("product");
+        const product = this.props.route.params.product;
 
         // to control the product has returned or canceled
         const cancelReturn = product["cancel"] || product["return"];
@@ -176,8 +176,10 @@ export default class OrderDetail extends React.Component {
                                             marginTop: 10,
                                             marginLeft: 5
                                         }}>
-
-                                        {product["address"]}
+                                            {
+                                                Object.values(product.address).join(", ")
+                                            }
+                                        {/* {product["address"]} */}
 
                                     </Text>
 

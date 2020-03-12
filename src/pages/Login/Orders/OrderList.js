@@ -1,5 +1,5 @@
 import React from "react";
-import {FlatList, View, Text, TouchableOpacity} from "react-native";
+import {FlatList, View, Text, TouchableOpacity, ActivityIndicator} from "react-native";
 import {mowStrings} from "../../../values/Strings/MowStrings";
 import MowContainer from "../../../components/ui/Core/Container/MowContainer";
 import MyOrders from "../../../sampleData/Orders/MyOrders";
@@ -8,6 +8,7 @@ import MowOrderViewItem from "../../../components/ui/MowOrderViewItem";
 import {mowColors} from "../../../values/Colors/MowColors";
 import CanceledOrders from "../../../sampleData/Orders/CanceledOrders";
 import ReturnedOrders from "../../../sampleData/Orders/ReturnedOrders";
+import moment from 'moment';
 
 export default class OrderList extends React.Component {
 
@@ -53,6 +54,10 @@ export default class OrderList extends React.Component {
         orderData: MyOrders
     };
 
+    componentDidMount(){
+        this.props.fetchOrders();
+    }
+
     _handleSelection(showAll, canceled, returned) {
         if (showAll) {
             this.setState({orderData: MyOrders});
@@ -66,8 +71,28 @@ export default class OrderList extends React.Component {
         this.setState({showAll: showAll, canceled: canceled, returned: returned});
     }
 
-    render() {
+    getOrderDataByDate = () => {
+        const {orderList} = this.props;
+        console.log('ORDER LIST =>', orderList)
+        const orderData = [];
+        orderList.forEach(order => {
+           const addressInd = orderData.findIndex(o => moment(Number(o.orderedOn)).isSame(moment(Number(order.orderedOn)), 'day'));
+            if(addressInd !== -1){
+                orderData[addressInd].orders.push(order);
+            }else{
+                orderData.push({
+                    orderDate: moment(Number(order.orderedOn)).format("LL"),
+                    orders: [order]
+                })   
+            }
+        })
+        return orderData
+    }
 
+    render() {
+        const {orderList, loading} = this.props;
+        const orderData = this.getOrderDataByDate();
+        console.log('OrderList =>', orderList)
         return(
 
             <MowContainer
@@ -142,10 +167,12 @@ export default class OrderList extends React.Component {
 
                 </View>
 
-                <FlatList
+               {loading ?
+               <ActivityIndicator color={mowColors.mainColor}/> :
+               <FlatList
                     showsVerticalScrollIndicator={false}
                     keyExtractor={(item, index) => index.toString()}
-                    data={this.state.orderData}
+                    data={orderData}
                     renderItem={({ item, index }) => (
 
                         <View
@@ -168,38 +195,28 @@ export default class OrderList extends React.Component {
                                         paddingVertical: 10
                                     }}>
 
-                                    {Object.keys(item).shift()}
-
+                                    {item.orderDate}
                                 </Text>
-
                             </View>
 
                             {/* products in the same month */}
                             <View
                                 style={{marginVertical: hp("2%")}}>
-
                                 {
-                                    item[Object.keys(item).shift()].map((value, key) => {
-
+                                    item.orders.map((value, key) => {
                                         return (
-
                                             // product item 
                                             <MowOrderViewItem
                                                 opacity={this.state.canceled || this.state.returned}
                                                 key={key}
                                                 product={value}/>
-
                                         )
                                     })
                                 }
-
                             </View>
-
                         </View>
-
                     )}
-
-                />
+                />}
 
             </MowContainer>
 

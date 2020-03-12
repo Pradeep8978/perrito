@@ -44,7 +44,7 @@ class PaymentInformation extends React.Component {
   completePayment = () => {
     const {cartItems, deliveryAddress} = this.props;
     delete deliveryAddress._id;
-    const url = `${API_BASE_URL}/orders/order/new`;
+    const url = `${API_BASE_URL}/orders/new`;
     const bodyParams = {
       orders: cartItems.map(item => ({
         productId: item._id,
