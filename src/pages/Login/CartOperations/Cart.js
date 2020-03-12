@@ -99,6 +99,7 @@ export default class Cart extends React.Component {
   }
 
   render() {
+    // console.log('CART PRODUCTS =>')
     const totalPrice = this._calculateTotalPrice();
     return (
       <MowContainer
@@ -147,9 +148,9 @@ export default class Cart extends React.Component {
                       justifyContent: 'center',
                     }}>
                     <Image
-                      resizeMode={'contain'}
+                      resizeMode={'cover'}
                       style={{width: hp('10%'), height: hp('10%')}}
-                      source={item['image']}
+                      source={{uri: item.images[0]}}
                     />
                   </View>
 

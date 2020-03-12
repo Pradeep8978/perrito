@@ -11,7 +11,7 @@ import { API_BASE_URL } from "../../constants/config";
 const ProductTile = props => {
     const {item, index, onSelectProduct} = props;
     console.log('HEROKU IMAGES =>', item.images)
-    const imageUrl = `${API_BASE_URL}/${item.images[0]}`;
+    const imageUrl = item.images[0];
     return(
    
         <TouchableOpacity
@@ -39,12 +39,12 @@ const ProductTile = props => {
             <TouchableOpacity
                 style={{position: "absolute", top: 5, right: 5, zIndex: 99}}>
 
-                <FAIcon
+                {/* <FAIcon
                     style={{
                         color: mowColors.titleTextColor,
                         fontSize: hp("2%")
                     }}
-                    name={"heart"}/>
+                    name={"heart"}/> */}
 
             </TouchableOpacity>
 
@@ -53,7 +53,7 @@ const ProductTile = props => {
                     height: "100%",
                     width: "100%",
                 }}
-                resizeMode={"contain"}
+                resizeMode={"stretch"}
                 source={{uri: imageUrl}}/>
 
             {

@@ -2,6 +2,7 @@
 export const colorAlias = {
     DEFAULT: "default",
     BLUE: "blue",
+    SKYBLUE: "skyblue",
     RED: "red",
     DARK: "dark"
 };
@@ -218,6 +219,77 @@ export function mowColorFunction(color) {
 
             pagination: {
                 activeDot: "#3580DF",
+                passiveDot: "grey"
+            },
+
+            filterHeaderBG: "#ebebeb"
+            
+        }
+        
+    }
+    else if (color === colorAlias.SKYBLUE) {
+        
+        return mowColors = {
+
+            navBarColor: '#1BBDE9',
+
+            statusbarColor: '#1BBDE9',
+    
+            loadingIndicatorColor: '#1BBDE9',
+    
+            pageBGColor: "#fff",
+
+            pageBGDarkColor: "#e1e1e1",
+
+            categoryBGColor: "#fff",
+
+            viewBGColor: "#fff",
+    
+            mainColor: "#1BBDE9",
+    
+            mainColorLight: '#3a89f3',
+    
+            mainColorDark: '#3367c1',
+    
+            mainColorDarkest: '#2d54a2',
+    
+            lineColor: "#fff",
+    
+            loadingTextColor: '#fff',
+    
+            errorColor: '#911b1f',
+    
+            infoColor: '#2866BF',
+    
+            noticeColor: '#737373',
+    
+            progressColor: '#2866BF',
+    
+            successColor: "#1BBDE9",
+    
+            warningColor: '#f29c00',
+    
+            shadowColor: "#707070",
+    
+            titleTextColor: "#707070",
+    
+            textColor: "#aeaeae",
+
+            footer: "#fff",
+
+            trendCampaign: {
+                buttonBG: "#1BBDE9",
+                buttonText: "#fff",
+            },
+
+            timerBG: "#fff",
+
+            timerText: "#1BBDE9",
+
+            titleIcon: "#1BBDE9",
+
+            pagination: {
+                activeDot: "#1BBDE9",
                 passiveDot: "grey"
             },
 

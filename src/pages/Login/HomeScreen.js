@@ -96,7 +96,7 @@ export default class HomeScreen extends React.Component {
     return (
       <MowContainer footerActiveIndex={1} navbar={false}>
         {/* home screen navbar */}
-        <View
+        {/* <View
           style={[
             {
               paddingHorizontal: gPadding,
@@ -111,14 +111,13 @@ export default class HomeScreen extends React.Component {
               alignItems: 'center',
               justifyContent: 'center',
             }}>
-            {/* logo with text */}
             <Image
               source={require('../../assets/logo/logo_with_text.png')}
               style={{height: hp('3%')}}
               resizeMode={'contain'}
             />
           </View>
-        </View>
+        </View> */}
 
         {/* search view */}
         <View
@@ -238,17 +237,17 @@ export default class HomeScreen extends React.Component {
               categoryStyle,
               {
                 marginTop: 15,
-                height: wp('75%'),
+                height: wp('60%'),
                 backgroundColor: mowColors.categoryBGColor,
               },
             ]}>
             {/* trend campaign title view */}
-            <MowTitleView
+            {/* <MowTitleView
               buttonOnPress={() => {
                 this.props.navigation.navigate('TrendCampaigns');
               }}
               title={mowStrings.homeScreen.trendCampaign}
-            />
+            /> */}
 
             {/* trend campaign swiper */}
             <Swiper
