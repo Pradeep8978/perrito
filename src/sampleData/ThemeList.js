@@ -16,7 +16,11 @@
      {
          id: 5,
          title: "dark"
-     }
+     },
+     {
+        id: 5,
+        title: "skyblue"
+    }
 
  ];
 

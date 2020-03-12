@@ -87,6 +87,9 @@ export default class Settings extends React.Component {
                 case "dark":
                     color = colorAlias.DARK;
                     break;
+                    case "skyblue":
+                        color = colorAlias.SKYBLUE;
+                        break;    
                 default:
                     color = colorAlias.DEFAULT;
             }

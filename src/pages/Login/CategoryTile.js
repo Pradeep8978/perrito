@@ -72,7 +72,7 @@ const CategoryTile = props => {
                                 width: "100%",
                             }}
                             resizeMode={"contain"}
-                            source={{uri : `${API_BASE_URL}/${item.images[0]}`}}/>
+                            source={{uri : item.images[0]}}/>
                         {
                             item["new"] &&
 

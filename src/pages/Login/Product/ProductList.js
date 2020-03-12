@@ -139,6 +139,7 @@ export default class ProductList extends React.Component {
     }
 
     _renderImages ({item, index}) {
+        console.log('REENDER IMAGE =>', item);
         return (
             <TouchableOpacity
                 onPress={() => {self.props.navigation.navigate("ProductDetail", {product: self.state.productList[index]})}}
@@ -147,7 +148,7 @@ export default class ProductList extends React.Component {
                 <Image
                     style={{height: "100%", width: "100%", borderRadius: 10}}
                     resizeMode={"stretch"}
-                    source={item["image"]}/>
+                    source={{uri:item}}/>
 
             </TouchableOpacity>
         );
@@ -366,6 +367,7 @@ export default class ProductList extends React.Component {
                                                 onSnapToItem={(activeSlide) => this._handleActiveSlide(activeSlide, index)}
                                                 sliderWidth={wp("45%")}
                                                 itemWidth={wp("45%")}
+                                                // hideIndicators={true}
                                                 renderItem={this._renderImages}/>
 
                                             {/* image pagination */}
@@ -593,7 +595,7 @@ export default class ProductList extends React.Component {
                                         <MowButtonBasic
                                             disabled={this.isExistCart(item)}
                                             onPress={() => {this._addToCart(item)}}
-                                            containerStyle={{marginBottom: 0, marginTop: 10, borderColor: this.isExistCart(item) ? mowColors.textColor :  mowColors.mainColor}}
+                                            containerStyle={{marginBottom: 20, marginTop: 0, borderColor: this.isExistCart(item) ? mowColors.textColor :  mowColors.mainColor}}
                                             textStyle={{color: this.isExistCart(item) ? mowColors.textColor :  mowColors.mainColor}}
                                             type={"success"}
                                             size={"small"}
