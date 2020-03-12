@@ -69,7 +69,7 @@ export default class ProductDetail extends React.Component {
     sizeArr: [],
     sizeListKey: 0,
     showMore: false,
-    commentListKey: 0,
+    commentListKey: 2,
     reviewLoading: false,
     CustomerComments: [],
   };
@@ -349,7 +349,7 @@ export default class ProductDetail extends React.Component {
 
   render() {
     // const product = this.state.product;
-    console.log("reviews============>", this.props.reviewsList)
+    console.log("reviews============>", this.state.CustomerComments)
     const product = this.props.selectedProduct;
     console.log('PRODUCTS =>', product);
     const {CustomerComments, reviewsListLoading, reviewsListError} = this.state;
@@ -643,27 +643,28 @@ export default class ProductDetail extends React.Component {
                   key={this.state.commentListKey}
                   showsHorizontalScrollIndicator={false}
                   keyExtractor={(item, index) => index.toString()}
-                  data={CustomerComments}
+                  data={CustomerComments.slice(0, this.state.commentListKey)}
                   renderItem={({item, index}) => (
+                    
                     <View>
-                      {index == 0 && (
+                      {/* {console.log("item ============>", item)} */}
                         <View key={index}>{this._commentRow(item, index)}</View>
-                      )}
-
-                      {index != 0 && this.state.showMore && (
+                      {/* { (
                         <View key={index}>{this._commentRow(item, index)}</View>
-                      )}
+                      )} */}
                     </View>
                   )}
                 />
               )}
 
               {/* show more button */}
-              {/* <TouchableOpacity
+              {/* {this.state.commentListKey<CustomerComments.length
+              && */}
+              <TouchableOpacity
                 onPress={() =>
                   this.setState({
                     showMore: true,
-                    commentListKey: this.state.commentListKey + 1,
+                    commentListKey: this.state.commentListKey+1,
                   })
                 }
                 style={{
@@ -690,7 +691,8 @@ export default class ProductDetail extends React.Component {
                     fontSize: hp('2%'),
                   }}
                 />
-              </TouchableOpacity> */}
+              </TouchableOpacity>
+              {/* } */}
             </View>
           </View>
         </ScrollView>

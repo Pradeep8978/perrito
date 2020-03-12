@@ -27,12 +27,6 @@ export default class Feedback extends React.Component {
     formErrors: {},
   };
 
-  // to store entered regular from user
-  // onChangeText = (key, value) => {
-  //     this.setState({
-  //         [key]: value,
-  //     })
-  // };
   onChangeText = (key, value) => {
     this.setState(prevState => ({
       formValues: {
@@ -70,9 +64,7 @@ export default class Feedback extends React.Component {
   };
 
   render() {
-    console.log('formErros==============>', this.state.formErrors);
     const {formErrors} = this.state;
-
     return (
       <MowContainer title={mowStrings.feedback.title}>
         <View style={pageContainerStyle}>

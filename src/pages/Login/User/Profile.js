@@ -103,6 +103,8 @@ export default class Profile extends React.Component {
       gender: '',
       dob: '',
     },
+     error: '',
+      formErrors: {},
   };
 
   componentDidMount() {
@@ -116,8 +118,7 @@ export default class Profile extends React.Component {
         gender: profile.gender,
         email: profile.email,
       },
-      error: '',
-      formErrors: {},
+     
     }));
   }
 
