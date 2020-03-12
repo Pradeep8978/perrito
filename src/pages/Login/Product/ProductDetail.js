@@ -282,6 +282,7 @@ export default class ProductDetail extends React.Component {
     console.log('URL =>?', url);
     Axios.post(url, body)
       .then(res => {
+        this.fetchUserReviews();
         _successDialog(
           'Success',
           'Thankyou for reviewing this product',
@@ -403,7 +404,7 @@ export default class ProductDetail extends React.Component {
                         width: '100%',
                       }}
                       resizeMode={'contain'}
-                      source={item['image']}
+                      source={{uri: item}}
                     />
                   );
                 })}

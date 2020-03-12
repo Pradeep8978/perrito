@@ -237,17 +237,17 @@ export default class HomeScreen extends React.Component {
               categoryStyle,
               {
                 marginTop: 15,
-                height: wp('75%'),
+                height: wp('60%'),
                 backgroundColor: mowColors.categoryBGColor,
               },
             ]}>
             {/* trend campaign title view */}
-            <MowTitleView
+            {/* <MowTitleView
               buttonOnPress={() => {
                 this.props.navigation.navigate('TrendCampaigns');
               }}
               title={mowStrings.homeScreen.trendCampaign}
-            />
+            /> */}
 
             {/* trend campaign swiper */}
             <Swiper
