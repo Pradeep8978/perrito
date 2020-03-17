@@ -58,7 +58,7 @@ export const mowStrings = new LocalizedString({
         },
         homeScreen: {
             trendCampaign: "Trend Campaigns",
-            trendCategories: "Trend Categories",
+            trendCategories: "Categories",
             bestDiscounts: "Today's Best Discounts",
             bestSeller: "Best Seller",
             outOfStock: "Out of Stock",
@@ -66,7 +66,7 @@ export const mowStrings = new LocalizedString({
             smartPhones: "Smart Phones",
             carAccessories: "Car Accessories",
             new: "New",
-            trendBrands: "Trend Brands",
+            trendBrands: "Popular Brands",
             browseAmazingProduct: "Browse Stylish and Amazing Products",
             food: "Food",
             toys: "Toys",
