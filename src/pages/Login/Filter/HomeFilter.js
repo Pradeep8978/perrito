@@ -48,7 +48,7 @@ class HomeFilter extends React.Component {
         if (value) {
             // handle searched word here
             this.props.fetchProducts(value);
-            this.props.navigation.navigate("ProductList")
+            this.props.navigation.navigate("ProductList", {searchStr: value})
             // to save searched word
             this._saveSearch(value);
         }
@@ -56,7 +56,7 @@ class HomeFilter extends React.Component {
 
     _goToCategoryList(searchData) {
         this.props.fetchProducts(searchData.id);
-        this.props.navigation.navigate("ProductList")
+        this.props.navigation.navigate("ProductList", {searchStr: searchData.id})
     }
 
     // to save searched word

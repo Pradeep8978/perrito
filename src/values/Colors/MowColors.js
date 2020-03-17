@@ -231,11 +231,11 @@ export function mowColorFunction(color) {
         
         return mowColors = {
 
-            navBarColor: '#0c6cf2',
+            navBarColor: '#7206c4',
 
-            statusbarColor: '#0c6cf2',
+            statusbarColor: '#7206c4',
     
-            loadingIndicatorColor: '#0c6cf2',
+            loadingIndicatorColor: '#7206c4',
     
             pageBGColor: "#fff",
 
@@ -245,7 +245,7 @@ export function mowColorFunction(color) {
 
             viewBGColor: "#fff",
     
-            mainColor: "#0c6cf2",
+            mainColor: "#7206c4",
     
             mainColorLight: '#3a89f3',
     
@@ -265,7 +265,7 @@ export function mowColorFunction(color) {
     
             progressColor: '#2866BF',
     
-            successColor: "#0c6cf2",
+            successColor: "#7206c4",
     
             warningColor: '#f29c00',
     
@@ -278,18 +278,18 @@ export function mowColorFunction(color) {
             footer: "#fff",
 
             trendCampaign: {
-                buttonBG: "#0c6cf2",
+                buttonBG: "#7206c4",
                 buttonText: "#fff",
             },
 
             timerBG: "#fff",
 
-            timerText: "#0c6cf2",
+            timerText: "#7206c4",
 
-            titleIcon: "#0c6cf2",
+            titleIcon: "#7206c4",
 
             pagination: {
-                activeDot: "#0c6cf2",
+                activeDot: "#7206c4",
                 passiveDot: "grey"
             },
 
