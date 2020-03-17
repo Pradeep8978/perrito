@@ -397,7 +397,7 @@ export default class HomeScreen extends React.Component {
                     width: wp('30%'),
                     height: hp('8%'),
                     justifyContent: 'center',
-                    backgroundColor: 'transparent',
+                    backgroundColor: '#fff',
                     borderStyle: 'solid',
                     borderWidth: 1,
                     borderColor: 'rgba(146, 146, 146, 0.41)',
