@@ -37,6 +37,9 @@ const CategoryTile = props => {
                         margin: 10,
                         marginTop: 0,
                         flex: 1,
+                        backgroundColor: '#f6ffff',
+                        paddingTop:10,
+                        borderRadius: 10
                     }}
                     onPress={()=>props.onSelectProduct(item)}
                     key={index}>

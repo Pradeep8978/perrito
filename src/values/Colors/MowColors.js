@@ -23,7 +23,7 @@ export let mowColors = {
     
     loadingIndicatorColor: "#ff8600",
     
-    pageBGColor: "#fff",
+    pageBGColor: "#f5f3ef",
 
     pageBGDarkColor: "#f0f0f0",
 
@@ -41,7 +41,7 @@ export let mowColors = {
     
     infoColor: '#2866BF',
 
-    categoryBGColor: "#fff",
+    categoryBGColor: "#f5f3ef",
     
     noticeColor: '#737373',
     
