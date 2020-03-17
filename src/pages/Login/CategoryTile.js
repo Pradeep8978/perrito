@@ -51,7 +51,7 @@ const CategoryTile = props => {
                             width: "100%",
                             borderRadius: 10,
                             borderStyle: "solid",
-                            borderWidth: 1,
+                            // borderWidth: 1,
                             borderColor: "rgba(112, 112, 112, 0.16)",
                             justifyContent: "center"
                         }}>

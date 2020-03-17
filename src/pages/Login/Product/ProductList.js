@@ -1,5 +1,5 @@
 import React from "react";
-import {FlatList, Image, Text, TouchableOpacity, View} from "react-native";
+import {FlatList, Image, Text, TouchableOpacity, View, ActivityIndicator} from "react-native";
 import {mowStrings} from "../../../values/Strings/MowStrings";
 import {mowColors} from "../../../values/Colors/MowColors";
 import MowContainer from "../../../components/ui/Core/Container/MowContainer";
@@ -194,10 +194,11 @@ export default class ProductList extends React.Component {
     }
 
     render() {
+        const {loading, error} = this.props;
         return(
 
             <MowContainer
-                title={"Woman Clothing"}>
+                title={this.props.route.params.searchStr}>
 
                 {/* filter view */}
                 <View
@@ -312,7 +313,8 @@ export default class ProductList extends React.Component {
                 </View>
 
                 {/* product list */}
-                {
+                { !loading ? 
+                <ActivityIndicator color={mowColors.mainColor} style={{flex: 1}} size={35}/> :
                     this.state.boxView
 
                         ?
