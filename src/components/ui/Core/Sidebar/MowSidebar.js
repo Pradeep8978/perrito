@@ -161,7 +161,7 @@ class MowSidebar extends React.Component {
                     </TouchableOpacity>
 
                     {/* favorites button */}
-                    <TouchableOpacity
+                    {/* <TouchableOpacity
                         style={styles.drawerItemView}
                         onPress={() => nav.navigate('Favorites')}>
 
@@ -176,7 +176,7 @@ class MowSidebar extends React.Component {
 
                         </Text>
 
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
 
                     {/* notification button */}
                     <TouchableOpacity
