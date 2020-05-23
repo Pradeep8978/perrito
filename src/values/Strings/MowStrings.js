@@ -81,7 +81,7 @@ export const mowStrings = new LocalizedString({
             exit: "Exit",
             logout: "Logout",
             profile: "Profile",
-            password: "Password",
+            password: "Change Password",
             favorites: "My Favorites",
             notification: "Notifications",
             cart: "My Cart",
