@@ -229,7 +229,7 @@ export default class Settings extends React.Component {
                         </Text>
 
                         {/* theme picker button */}
-                        <MowButtonBasic
+                        {/* <MowButtonBasic
                             onPress={() => {this.setState({pickerVisible: true, pickerTitle: mowStrings.theme, pickerData: this.state.themeData, pickerType: 2})}}
                             rightIcon={"chevron-down"}
                             leftIcon={"smartphone"}
@@ -250,7 +250,7 @@ export default class Settings extends React.Component {
 
                             {this.state.theme}
 
-                        </MowButtonBasic>
+                        </MowButtonBasic> */}
 
                     </View>
 

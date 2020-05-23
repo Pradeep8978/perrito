@@ -6,11 +6,11 @@ const LanguageData = [
         title: "English",
         alias: "en"
     },
-    {
-        id: 2,
-        title: "Deutsch",
-        alias: "de"
-    }
+    // {
+    //     id: 2,
+    //     title: "Deutsch",
+    //     alias: "de"
+    // }
 
 ];
 
