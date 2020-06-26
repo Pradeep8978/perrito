@@ -72,7 +72,7 @@ export default class OrderList extends React.Component {
     }
 
     getOrderDataByDate = () => {
-        const {orderList} = this.props;
+        const {orderList = []} = this.props;
         console.log('ORDER LIST =>', orderList)
         const orderData = [];
         orderList.forEach(order => {

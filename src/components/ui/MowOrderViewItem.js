@@ -4,6 +4,7 @@ import {View, Text, TouchableOpacity, Image} from "react-native";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import {borderStyle} from "../../values/Styles/MowStyles";
 import {mowColors} from "../../values/Colors/MowColors";
+import moment from 'moment'
 import {heightPercentageToDP as hp, widthPercentageToDP as wp} from "react-native-responsive-screen";
 // import {withNavigation} from "react-navigation";
 import { useNavigation } from '@react-navigation/native';
@@ -65,7 +66,7 @@ const MowOrderViewItem = (props) => {
                     }
 
                     {
-                        value["count"] > 1 &&
+                        value["quantity"] > 1 &&
 
                             <View
                                 style={{
@@ -82,7 +83,7 @@ const MowOrderViewItem = (props) => {
                                 <Text
                                     style={{fontSize: hp(1.6), color: "white", fontWeight: "500"}}>
 
-                                    +{value["count"]}
+                                    +{value["quantity"]}
 
                                 </Text>
 
@@ -105,7 +106,7 @@ const MowOrderViewItem = (props) => {
                             color: mowColors.textColor
                         }}>
 
-                        {value["date"]}
+                        {value.name}
 
                     </Text>
 

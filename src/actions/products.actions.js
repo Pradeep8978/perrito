@@ -66,7 +66,7 @@ export const fetchProducts = searchStr => dispatch => {
   dispatch(fetchProductsLoading());
   let url = `${API_BASE_URL}/products/list`;
   if (searchStr) {
-    url = `${url}?search=${searchStr}`;
+    url = `${url}?categories=${searchStr}`;
   }
   Axios.get(url)
     .then(res => {

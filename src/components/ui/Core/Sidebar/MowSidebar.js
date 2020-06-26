@@ -179,7 +179,7 @@ class MowSidebar extends React.Component {
                     </TouchableOpacity> */}
 
                     {/* notification button */}
-                    <TouchableOpacity
+                    {/* <TouchableOpacity
                         style={styles.drawerItemView}
                         onPress={() => nav.navigate('Notifications')}>
 
@@ -194,7 +194,7 @@ class MowSidebar extends React.Component {
 
                         </Text>
 
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
 
                     {/* cart button */}
                     <TouchableOpacity

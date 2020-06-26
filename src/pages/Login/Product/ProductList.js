@@ -198,7 +198,7 @@ export default class ProductList extends React.Component {
         return(
 
             <MowContainer
-                title={this.props.route.params.searchStr}>
+                title={'Products'}>
 
                 {/* filter view */}
                 <View
@@ -313,7 +313,7 @@ export default class ProductList extends React.Component {
                 </View>
 
                 {/* product list */}
-                { !loading ? 
+                { loading ? 
                 <ActivityIndicator color={mowColors.mainColor} style={{flex: 1}} size={35}/> :
                     this.state.boxView
 

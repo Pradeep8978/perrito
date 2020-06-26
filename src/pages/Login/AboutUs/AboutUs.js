@@ -20,7 +20,7 @@ export default class AboutUs extends React.Component {
 
                     {/* banner image */}
                     <Image
-                        source={require("../../../assets/image/mowega_office.png")}
+                        source={{uri: 'https://thenextweb.com/wp-content/blogs.dir/1/files/2015/04/BauBnb.jpg'}}
                         resizeMode={"contain"}
                         style={{width: "100%", height: hp(30)}}/>
 
@@ -34,15 +34,11 @@ export default class AboutUs extends React.Component {
                             paddingHorizontal: 5
                         }}>
 
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Nulla vel malesuada metus. Donec lacus elit, volutpat eu
-                        fermentum semper, vestibulum at sapien. Nam sed
-                        pellentesque est. Pellentesque euismod est eros,
-                        pretium interdum lorem venenatis ut. Quisque
-                        fermentum massa et iaculis iaculis. Sed massa tortor,
-                        imperdiet ut nulla sed, volutpat accumsan dui. Phasellus
-                        et congue tellus. Nullam pretium sapien eu risus
-                        tincidunt tempus
+PET INNOVATIONS PRIVATE LIMITED is a registered company under Ministry of Corporate Affairs (MCA) bearing CIN: U74999TG2019PTC136667. PET INNOVATIONS PRIVATE LIMITED is a 0.6 Years old Private incorporated in the year 2019.
+
+The Paid-Up Capital of PET INNOVATIONS PRIVATE LIMITED is ₹1.00 Lakhs and is authorized to raise capital up to ₹1.00 Lakhs excluding premium.
+
+PET INNOVATIONS PRIVATE LIMITED is Active company as on 16-12-2019 as per MCA.
 
                     </Text>
 

@@ -347,7 +347,6 @@ export default class ProductDetail extends React.Component {
 
   render() {
     // const product = this.state.product;
-    console.log('reviews============>', this.state.CustomerComments);
     const product = this.props.selectedProduct;
     console.log('PRODUCTS =>', product);
     const {CustomerComments, reviewsListLoading, reviewsListError} = this.state;
@@ -643,6 +642,7 @@ export default class ProductDetail extends React.Component {
                   keyExtractor={(item, index) => index.toString()}
                   data={CustomerComments.slice(0, this.state.commentListKey)}
                   renderItem={({item, index}) => (
+                    
                     <View>
                       {/* {console.log("item ============>", item)} */}
                       <View key={index}>{this._commentRow(item, index)}</View>
@@ -653,8 +653,6 @@ export default class ProductDetail extends React.Component {
                   )}
                 />
               )}
-
-              {/* show more button */}
               {this.state.commentListKey < CustomerComments.length && (
                 <TouchableOpacity
                   onPress={() =>
@@ -663,6 +661,8 @@ export default class ProductDetail extends React.Component {
                       commentListKey: this.state.commentListKey + 1,
                     })
                   }
+
+
                   style={{
                     alignSelf: 'center',
                     marginTop: 5,

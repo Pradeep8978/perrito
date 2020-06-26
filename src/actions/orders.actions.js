@@ -23,12 +23,13 @@ export const saveDeliveryAddress = (data) => ({
 
 export const fetchOrders = searchStr => dispatch => {
     dispatch(fetchOrdersLoading());
-    let url = `${API_BASE_URL}/orders/list`;
-    if(searchStr){
-        url = `${url}?search=${searchStr}`;
-    }
+    let url = `${API_BASE_URL}/orders/order/list`;
+    // if(searchStr){
+    //     url = `${url}?search=${searchStr}`;
+    // }
     Axios.get(url)
     .then(res => {
+        console.log("Ordera List ==============>", res.data)
         dispatch(fetchOrdersSuccess(res.data))
     })
     .catch(err => {
