@@ -17,14 +17,36 @@ export const validateName = value => {
     return error;
 }
 
-export const validatePassword = value => {
+export const validatePassword = value => { 
     let error;
     if(!value){
         error = 'Password is Required'
     }
     return error;
 }
+export const validateCurrentPassword = value => {
+    let error;
+    if(!value){
+        error = 'Current password is Required'
+    }
+    return error;
+}
 
+export const validateNewPassword = value => {
+    let error;
+    if(!value){
+        error = 'New password is Required'
+    }
+    return error;
+}
+
+export const validateConfirmPassword = value => {
+    let error;
+    if(!value){
+        error = 'Confirm password is Required'
+    }
+    return error;
+}
 // export const validatePhoneNumber = value => {
 //     let error;
 //     if(!value){
@@ -148,5 +170,8 @@ export const validationConfig = {
     city:validateCity,
     state:validatestate,
     title:validateTitle,
-    message:validateMessage
+    message:validateMessage,
+    oldpassword:validateCurrentPassword,
+    newpassword:validateNewPassword,
+    confirmpassword:validateConfirmPassword
 }

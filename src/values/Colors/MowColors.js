@@ -41,7 +41,7 @@ export let mowColors = {
     
     infoColor: '#2866BF',
 
-    categoryBGColor: "#f9f9f9",
+    categoryBGColor: "#fdfff5",
     
     noticeColor: '#737373',
     
