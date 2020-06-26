@@ -10,6 +10,12 @@ import {heightPercentageToDP as hp, widthPercentageToDP as wp} from "react-nativ
 import {MowInput} from "../../../../components/ui/Common/Input/MowInput";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import {MowButtonBasic} from "../../../../components/ui/Common/Button/MowButton";
+import {
+    _successDialog,
+    _warningDialog,
+  } from '../../../../components/ui/Common/Dialog/MowDialogFunctions';
+import Axios from 'axios';
+import {API_BASE_URL} from '../../../../constants/config';
 
 export default class ExtraSecurity extends React.Component {
 
@@ -17,22 +23,47 @@ export default class ExtraSecurity extends React.Component {
         super(props);
 
         this.state = {
+            formValues :{
             securityCode1: null,
             securityCode2: null,
             securityCode3: null,
             securityCode4: null,
             securityCode5: null,
+            securityCode6: null,
+            },
         }
     }
 
     // to store entered regular from user
     onChangeText = (key, value) => {
-        this.setState({
+        this.setState(prevState => ({
+          formValues: {
+            ...prevState.formValues,
             [key]: value,
-        })
-    };
+          },
+        }));
+      };
+
+      onSecurity = () => {
+        const {formValues} = this.state;
+        const url = `${API_BASE_URL}/customers/check/otp`;
+        // if (!this.validateAllFields()) return;
+        const bodyParams = {
+            otp: Object.values(formValues).join(""),
+            email: this.props.route.params.email
+        }
+        Axios.post(url, bodyParams)
+          .then(res => {
+            // this.props.navigation.goBack();
+            this.props.navigation.navigate("ChangePassword",{email: this.props.route.params.email})
+          })
+          .catch(err => {
+              throw err
+          });
+      };
 
     render() {
+        console.log("formavalues", this.state.formValues)
 
         return (
 
@@ -114,6 +145,11 @@ export default class ExtraSecurity extends React.Component {
                                 textInputStyle={securityCodeStyle.textInput}
                                 onChangeText={value => this.onChangeText("securityCode5", value)}
                                 containerStyle={securityCodeStyle.input}/>
+                              <MowInput
+                                maxLength={1}
+                                textInputStyle={securityCodeStyle.textInput}
+                                onChangeText={value => this.onChangeText("securityCode6", value)}
+                                containerStyle={securityCodeStyle.input}/>
 
                         </View>
 
@@ -139,7 +175,8 @@ export default class ExtraSecurity extends React.Component {
                         </View>
 
                         <MowButtonBasic
-                            onPress={() => this.props.navigation.navigate("ChangePassword")}
+                            // onPress={() => this.props.navigation.navigate("ChangePassword")}
+                            onPress={() => this.onSecurity()}
                             textStyle={{color: mowColors.mainColor, fontWeight: "normal", letterSpacing: 0}}
                             type={"default"}>
 

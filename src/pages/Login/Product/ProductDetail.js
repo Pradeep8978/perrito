@@ -80,9 +80,9 @@ export default class ProductDetail extends React.Component {
     // this.props.fetchReviews(selectedProduct._id);
   };
 
-  componentDidUpdate(prevProps){
+  componentDidUpdate(prevProps) {
     const {selectedProduct} = this.props;
-    if(selectedProduct._id !== prevProps.selectedProduct._id){
+    if (selectedProduct._id !== prevProps.selectedProduct._id) {
       this.fetchUserReviews();
     }
   }
@@ -91,9 +91,9 @@ export default class ProductDetail extends React.Component {
     const {selectedProduct} = this.props;
     const url = `${API_BASE_URL}/reviews/customerReview/list/${selectedProduct._id}`;
     this.setState({
-      reviewsListLoading: true, 
+      reviewsListLoading: true,
       CustomerComments: [],
-      reviewsListError: null
+      reviewsListError: null,
     });
     Axios.get(url)
       .then(res => {
@@ -118,9 +118,9 @@ export default class ProductDetail extends React.Component {
     this.setState({
       reviewsListLoading: false,
       CustomerComments: [],
-      reviewsListError: null
-    })
-  }
+      reviewsListError: null,
+    });
+  };
 
   _handleSizeSelection(index) {
     let sizeArr = this.state.sizeArr;
@@ -283,18 +283,15 @@ export default class ProductDetail extends React.Component {
     Axios.post(url, body)
       .then(res => {
         this.fetchUserReviews();
-        _successDialog(
-          'Success',
-          'Thankyou for reviewing this product',
-        );
+        _successDialog('Success', 'Thankyou for reviewing this product');
         this.setState({reviewLoading: false, showModal: false});
       })
       .catch(err => {
         console.log('error =>', err);
         _warningDialog(
           'Failed',
-          'Unable to submit your Review on product. please try again later'
-        )
+          'Unable to submit your Review on product. please try again later',
+        );
       })
       .finally(() => {
         this.setState({reviewLoading: false, showModal: false});
@@ -350,7 +347,6 @@ export default class ProductDetail extends React.Component {
 
   render() {
     // const product = this.state.product;
-    console.log("reviews============>", this.state.CustomerComments)
     const product = this.props.selectedProduct;
     console.log('PRODUCTS =>', product);
     const {CustomerComments, reviewsListLoading, reviewsListError} = this.state;
@@ -649,7 +645,7 @@ export default class ProductDetail extends React.Component {
                     
                     <View>
                       {/* {console.log("item ============>", item)} */}
-                        <View key={index}>{this._commentRow(item, index)}</View>
+                      <View key={index}>{this._commentRow(item, index)}</View>
                       {/* { (
                         <View key={index}>{this._commentRow(item, index)}</View>
                       )} */}
@@ -657,43 +653,42 @@ export default class ProductDetail extends React.Component {
                   )}
                 />
               )}
+              {this.state.commentListKey < CustomerComments.length && (
+                <TouchableOpacity
+                  onPress={() =>
+                    this.setState({
+                      showMore: true,
+                      commentListKey: this.state.commentListKey + 1,
+                    })
+                  }
 
-              {/* show more button */}
-              {/* {this.state.commentListKey<CustomerComments.length
-              && */}
-              <TouchableOpacity
-                onPress={() =>
-                  this.setState({
-                    showMore: true,
-                    commentListKey: this.state.commentListKey+1,
-                  })
-                }
-                style={{
-                  alignSelf: 'center',
-                  marginTop: 5,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}>
-                <Text
+
                   style={{
-                    fontSize: hp('1.7%'),
-                    color: mowColors.mainColor,
-                    fontWeight: '500',
-                    fontStyle: 'normal',
-                    letterSpacing: 0,
+                    alignSelf: 'center',
+                    marginTop: 5,
+                    alignItems: 'center',
+                    justifyContent: 'center',
                   }}>
-                  {mowStrings.productDetail.showMore}
-                </Text>
+                  <Text
+                    style={{
+                      fontSize: hp('1.7%'),
+                      color: mowColors.mainColor,
+                      fontWeight: '500',
+                      fontStyle: 'normal',
+                      letterSpacing: 0,
+                    }}>
+                    {mowStrings.productDetail.showMore}
+                  </Text>
 
-                <FAIcon
-                  name={'chevron-down'}
-                  style={{
-                    color: mowColors.mainColor,
-                    fontSize: hp('2%'),
-                  }}
-                />
-              </TouchableOpacity>
-              {/* } */}
+                  <FAIcon
+                    name={'chevron-down'}
+                    style={{
+                      color: mowColors.mainColor,
+                      fontSize: hp('2%'),
+                    }}
+                  />
+                </TouchableOpacity>
+              )}
             </View>
           </View>
         </ScrollView>

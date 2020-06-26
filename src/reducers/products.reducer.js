@@ -58,7 +58,7 @@ const productsReducer = (state = INITIAL_STATE, action) => {
     case types.DECREMENT_CART_ITEM_COUNT:
       const updatedCart = state.cartItems.map((o, i) => {
         if (action.payload === i) {
-          o.cartCount = o.cartCount + 1;
+          o.cartCount = o.cartCount - 1;
         }
         return o;
       });
